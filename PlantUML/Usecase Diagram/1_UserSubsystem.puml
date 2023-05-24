@@ -1,5 +1,7 @@
 @startuml user_subsystem
+scale 2
 left to right direction
+skinparam defaultFontName B Nazanin
 
 rectangle "زیرسیستم کاربری"{
     usecase "ثبت‌نام در سامانه" as signup

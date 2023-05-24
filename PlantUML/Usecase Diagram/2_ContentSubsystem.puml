@@ -1,5 +1,7 @@
 @startuml content_subsystem
+scale 2
 left to right direction
+skinparam defaultFontName B Nazanin
 
 rectangle "زیرسیستم محتوا"{
     usecase "عضو شدن در کانال" as join
@@ -10,26 +12,24 @@ rectangle "زیرسیستم محتوا"{
     usecase "تعریف حق عضویت" as fee
     usecase "تعیین مدیر کانال" as raise
     usecase "تعیین سود مدیر کانال" as salary
-    usecase "واریز سود کانال" as pay
 }
 
 actor "کاربر" as user
 actor "عضو کانال" as member
+actor "//تولیدکننده محتوا//" as producer
 actor "مدیر کانال" as admin
 actor "صاحب کانال" as owner
-actor "زمان" as time
+
+admin -|> producer
+owner -|> producer
 
 user -- join
 member -- see
 user -- start
-admin -- create
-owner -- create
-admin -- specialize
-owner -- specialize
+producer -- create
+producer -- specialize
 owner -- fee
 owner -- raise
 owner -- salary
-time -- pay
-
 
 @enduml

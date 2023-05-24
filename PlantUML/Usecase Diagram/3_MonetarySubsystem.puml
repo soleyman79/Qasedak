@@ -1,9 +1,12 @@
 @startuml monetary_subsystem
+scale 2
 left to right direction
+skinparam defaultFontName B Nazanin
 
 rectangle "زیرسیستم مالی"{
     usecase "خرید اشتراک" as buy
     usecase "به روزرسانی زمان باقی‌مانده‌ی اشتراک" as update
+    usecase "واریز سود کانال" as pay
 }
 
 actor "زمان" as time
@@ -11,5 +14,6 @@ actor "عضو کانال" as member
 
 member -- buy
 time -- update
+time -- pay
 
 @enduml
