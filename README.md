@@ -1,3 +1,8 @@
 # Qasedak
-Object Oriented Design Project / Spring 2023
-Dr. Raman Ramsin
+Object Oriented Design Course Project
+
+by Dr. Raman Ramsin
+
+Sharif University of Technology
+
+Spring 2023
