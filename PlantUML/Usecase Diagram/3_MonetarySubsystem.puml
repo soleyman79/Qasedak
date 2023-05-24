@@ -1,0 +1,15 @@
+@startuml monetary_subsystem
+left to right direction
+
+rectangle "زیرسیستم مالی"{
+    usecase "خرید اشتراک" as buy
+    usecase "به روزرسانی زمان باقی‌مانده‌ی اشتراک" as update
+}
+
+actor "زمان" as time
+actor "عضو کانال" as member
+
+member -- buy
+time -- update
+
+@enduml

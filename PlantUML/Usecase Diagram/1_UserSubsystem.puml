@@ -1,0 +1,17 @@
+@startuml user_subsystem
+left to right direction
+
+rectangle "زیرسیستم کاربری"{
+    usecase "ثبت‌نام در سامانه" as signup
+    usecase "ورود به سامانه" as login
+    usecase "خروج از سامانه" as logout
+}
+
+actor "کاربر بالقوه" as defactoUser
+actor "کاربر" as user
+
+defactoUser -- signup
+user -- login
+user -- logout
+
+@enduml
