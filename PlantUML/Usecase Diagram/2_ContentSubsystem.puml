@@ -12,6 +12,7 @@ rectangle "زیرسیستم محتوا"{
     usecase "تعریف حق عضویت" as fee
     usecase "تعیین مدیر کانال" as raise
     usecase "تعیین سود مدیر کانال" as salary
+    usecase "خروج از کانال" as delete
 }
 
 actor "کاربر" as user
@@ -20,11 +21,12 @@ actor "//تولیدکننده محتوا//" as producer
 actor "مدیر کانال" as admin
 actor "صاحب کانال" as owner
 
-admin -|> producer
+admin --|> producer
 owner -|> producer
 
 user -- join
-member -- see
+member --- see
+member --- delete
 user -- start
 producer -- create
 producer -- specialize
