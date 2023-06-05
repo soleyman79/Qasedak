@@ -13,6 +13,7 @@ rectangle "زیرسیستم محتوا"{
     usecase "تعیین مدیر کانال" as raise
     usecase "تعیین سود مدیر کانال" as salary
     usecase "خروج از کانال" as delete
+    usecase "جستجوی کانال" as search
 }
 
 actor "کاربر" as user
@@ -25,6 +26,7 @@ admin --|> producer
 owner -|> producer
 
 user -- join
+user -- search
 member --- see
 member --- delete
 user -- start
@@ -33,5 +35,7 @@ producer -- specialize
 owner -- fee
 owner -- raise
 owner -- salary
+
+join .> search :include
 
 @enduml
