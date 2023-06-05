@@ -1,7 +1,9 @@
 @startuml content_subsystem
 scale 2
 left to right direction
-skinparam defaultFontName B Nazanin
+skinparam ActorFontName B Nazanin
+skinparam UsecaseFontName B Nazanin
+skinparam TitleFontName B Nazanin
 
 rectangle "زیرسیستم محتوا"{
     usecase "عضو شدن در کانال" as join
@@ -15,6 +17,7 @@ rectangle "زیرسیستم محتوا"{
     usecase "خروج از کانال" as delete
     usecase "جستجوی کانال" as search
 }
+
 
 actor "کاربر" as user
 actor "عضو کانال" as member
@@ -36,6 +39,6 @@ owner -- fee
 owner -- raise
 owner -- salary
 
-join .> search :include
+join .> search : <<include>>
 
 @enduml
