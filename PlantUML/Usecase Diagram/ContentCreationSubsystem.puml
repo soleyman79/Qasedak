@@ -6,7 +6,7 @@ skinparam ActorFontName B Nazanin
 skinparam UsecaseFontName B Nazanin
 skinparam TitleFontName B Nazanin
 
-rectangle "زیرسیستم محتوا"{
+rectangle "زیرسیستم تولید محتوا"{
     usecase "تعریف حق عضویت" as fee
     usecase "تعیین مدیر کانال" as raise
     usecase "تعیین سود مدیر کانال" as salary
