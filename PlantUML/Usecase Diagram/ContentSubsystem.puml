@@ -1,5 +1,4 @@
 @startuml content_subsystem
-
 scale 2
 left to right direction
 skinparam ActorFontName B Nazanin
@@ -7,17 +6,18 @@ skinparam UsecaseFontName B Nazanin
 skinparam TitleFontName B Nazanin
 
 rectangle "زیرسیستم محتوا"{
-    usecase "عضو شدن در کانال" as join
-    usecase "مشاهده محتوا" as see
-    usecase "ایجاد کانال" as start
-    usecase "تولید محتوا" as create
-    usecase "تعیین محتوای ویژه" as specialize
     usecase "تعریف حق عضویت" as fee
+    usecase "مشاهده محتوا" as see
     usecase "تعیین مدیر کانال" as raise
-    usecase "تعیین سود مدیر کانال" as salary
     usecase "خروج از کانال" as delete
+    usecase "تعیین سود مدیر کانال" as salary
     usecase "جستجوی کانال" as search
+    usecase "تولید محتوا" as createC
+    usecase "ایجاد کانال" as start
+    usecase "تعیین محتوای ویژه" as specialize
+    usecase "عضو شدن در کانال" as join
 }
+
 
 actor "کاربر" as user
 actor "عضو کانال" as member
@@ -28,16 +28,20 @@ actor "صاحب کانال" as owner
 admin --|> producer
 owner -|> producer
 
-user -- join
-user -- search
-member --- see
-member --- delete
-user -- start
-producer -- create
-producer -- specialize
 owner -- fee
+see -- member
+fee -[hidden]- see
 owner -- raise
+delete -- member
+raise -[hidden]- delete
 owner -- salary
+search -- user
+salary -[hidden]- search
+producer -- createC
+start -- user
+createC -[hidden]- start
+producer -- specialize
+join -- user
 
 join .> search : <<include>>
 

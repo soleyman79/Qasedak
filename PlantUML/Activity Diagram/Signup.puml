@@ -1,22 +1,30 @@
 @startuml signup
 
 scale 2
+
 skinparam ActivityFontName B Nazanin
+skinparam NoteBackgroundColor White
+skinparam NoteFontSize 10
+skinparam NoteFontName B Nazanin
+skinparam NoteTextAlignment center
 
 
 (*) --> "درخواست ثبت‌نام در سامانه"
 --> "وارد کردن شماره تلفن یا آدرس"
 
-if "decisioninput" then
+if "" then
+note right
+<<decisionInput>>
+ورودی با الگوهای مربوطه منطبق است
+end note
+
   --> [true] "Some Action"
   --> "Another Action"
   -right-> (*)
 else
-  -> [else] "Something else"
+  --> [False] "Something else"
   --> [Ending process] (*)
 endif
-
-
 
 --> (*)
 
