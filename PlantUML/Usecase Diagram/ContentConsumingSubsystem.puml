@@ -1,0 +1,26 @@
+@startuml content_consuming_subsystem
+
+scale 2
+left to right direction
+skinparam ActorFontName B Nazanin
+skinparam UsecaseFontName B Nazanin
+skinparam TitleFontName B Nazanin
+
+rectangle "زیرسیستم مشاهده محتوا"{
+    usecase "مشاهده محتوا" as see
+    usecase "خروج از کانال" as delete
+    usecase "جستجوی کانال" as search
+    usecase "عضو شدن در کانال" as join
+}
+
+actor "کاربر" as user
+actor "عضو کانال" as member
+
+member -- see
+member -- delete
+user -- search
+user -- join
+
+join .> search : <<include>>
+
+@enduml
