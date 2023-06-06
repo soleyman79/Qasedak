@@ -45,4 +45,12 @@ join -- user
 
 join .> search : <<include>>
 
+' together {
+' fee
+' raise
+' salary
+' create
+' specialize
+' }
+
 @enduml
