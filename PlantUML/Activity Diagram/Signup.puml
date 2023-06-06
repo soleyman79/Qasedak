@@ -1,0 +1,23 @@
+@startuml signup
+
+scale 2
+skinparam ActivityFontName B Nazanin
+
+
+(*) --> "درخواست ثبت‌نام در سامانه"
+--> "وارد کردن شماره تلفن یا آدرس"
+
+if "decisioninput" then
+  --> [true] "Some Action"
+  --> "Another Action"
+  -right-> (*)
+else
+  -> [else] "Something else"
+  --> [Ending process] (*)
+endif
+
+
+
+--> (*)
+
+@enduml

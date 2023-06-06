@@ -1,4 +1,5 @@
 @startuml content_subsystem
+
 scale 2
 left to right direction
 skinparam ActorFontName B Nazanin
@@ -17,7 +18,6 @@ rectangle "زیرسیستم محتوا"{
     usecase "تعیین محتوای ویژه" as specialize
     usecase "عضو شدن در کانال" as join
 }
-
 
 actor "کاربر" as user
 actor "عضو کانال" as member
