@@ -1,4 +1,5 @@
 @startuml content_subsystem
+
 scale 2
 left to right direction
 skinparam ActorFontName B Nazanin
@@ -17,7 +18,6 @@ rectangle "زیرسیستم محتوا"{
     usecase "خروج از کانال" as delete
     usecase "جستجوی کانال" as search
 }
-
 
 actor "کاربر" as user
 actor "عضو کانال" as member

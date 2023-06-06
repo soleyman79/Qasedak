@@ -1,4 +1,5 @@
 @startuml monetary_subsystem
+
 scale 2
 left to right direction
 skinparam defaultFontName B Nazanin
