@@ -1,0 +1,33 @@
+@startuml content_creation_subsystem
+
+scale 2
+left to right direction
+skinparam ActorFontName B Nazanin
+skinparam UsecaseFontName B Nazanin
+skinparam TitleFontName B Nazanin
+
+rectangle "زیرسیستم محتوا"{
+    usecase "تعریف حق عضویت" as fee
+    usecase "تعیین مدیر کانال" as raise
+    usecase "تعیین سود مدیر کانال" as salary
+    usecase "تولید محتوا" as createC
+    usecase "تعیین محتوای ویژه" as specialize
+    usecase "ایجاد کانال" as start
+}
+
+actor "کاربر" as user
+actor "//تولیدکننده محتوا//" as producer
+actor "مدیر کانال" as admin
+actor "صاحب کانال" as owner
+
+admin --|> producer
+owner -|> producer
+
+owner -- fee
+owner -- raise
+owner -- salary
+producer -- createC
+producer -- specialize
+user -- start
+
+@enduml
