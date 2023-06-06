@@ -25,7 +25,7 @@ actor "//تولیدکننده محتوا//" as producer
 actor "مدیر کانال" as admin
 actor "صاحب کانال" as owner
 
-admin --|> producer
+admin -|> producer
 owner -|> producer
 
 owner -- fee
