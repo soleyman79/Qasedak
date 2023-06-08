@@ -5,15 +5,27 @@ left to right direction
 skinparam DefaultFontName B Nazanin
 
 package "زیرسیستم مالی" {
-    object "__کاربر:__" as user
+    object "__کاربر: کاربر متناظر با صاحب کانال__" as o_user
+    object "__کاربر: کاربر متناظر با مدیر1__" as m1_user
+    object "__کاربر: کاربر متناظر با مدیر2__" as m2_user
+    object "__کاربر: کاربر متناظر با صاحب مدیر3__" as m3_user
+
     object "__کانال:__" as chanel
-    object "__مدیر کانال:__" as manager
+    object "__مدیر کانال: مدیر1__" as manager1
+    object "__مدیر کانال: مدیر2__" as manager2
+    object "__مدیر کانال: مدیر3__" as manager3
     object "__صاحب کانال:__" as owner
 
-    chanel --> manager
+    chanel --> manager1
+    chanel --> manager2
+    chanel --> manager3
     chanel --> owner
-    manager --> user
-    owner --> user
+    manager1 --> m1_user
+    manager2 --> m2_user
+    manager3 --> m3_user
+    owner --> o_user
 }
+
+note "تعداد مدیران نمایش داده شده در نمودار باید\nبرابر تعداد کل مدیران آن کانال باشد" as N1
 
 @enduml
