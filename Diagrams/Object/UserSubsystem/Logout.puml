@@ -1,0 +1,12 @@
+@startuml signup
+
+scale 2
+left to right direction
+skinparam DefaultFontName B Nazanin
+
+
+package "زیرسیستم کاربری" {
+    object "__کاربر:__" as user
+}
+
+@enduml
