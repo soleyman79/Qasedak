@@ -6,11 +6,11 @@ skinparam DefaultFontName B Nazanin
 
 
 package "زیرسیستم مشاهده محتوا" {
-    object "__کاربر:__" as user
+    object "__عضو کانال:__" as member
     object "__کانال:__" as chanel
     object "__محتوا:__" as content
 
-    user --> chanel
+    member --> chanel
     chanel --> content
 }
 
