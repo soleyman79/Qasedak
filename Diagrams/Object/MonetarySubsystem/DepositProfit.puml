@@ -1,0 +1,19 @@
+@startuml deposit_profit
+
+scale 2
+left to right direction
+skinparam DefaultFontName B Nazanin
+
+package "زیرسیستم مالی" {
+    object "__کاربر:__" as user
+    object "__کانال:__" as chanel
+    object "__مدیر کانال:__" as manager
+    object "__صاحب کانال:__" as owner
+
+    chanel --> manager
+    chanel --> owner
+    manager --> user
+    owner --> user
+}
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml update_subscription_time
+
+scale 2
+left to right direction
+skinparam DefaultFontName B Nazanin
+
+package "زیرسیستم مالی" {
+    object "__کاربر:__" as user
+    object "__عضو کانال:__" as member
+    object "__اشتراک:__" as subscription
+
+    user --> member
+    member --> subscription
+}
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml buy_subscription
+
+scale 2
+left to right direction
+skinparam DefaultFontName B Nazanin
+
+package "زیرسیستم مالی" {
+    object "__عضو کانال:__" as member
+    object "__کانال:__" as chanel
+    object "__اشتراک:__" as subscription
+
+    member -- chanel
+    member --> subscription
+    chanel --> subscription
+}
+
+@enduml
