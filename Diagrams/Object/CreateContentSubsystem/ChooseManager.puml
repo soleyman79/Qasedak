@@ -6,11 +6,12 @@ skinparam DefaultFontName B Nazanin
 
 package "زیرسیستم تولید محتوا" {
     object "__صاحب کانال:__" as owner
+    object "__کاربر:__" as user
     object "__کانال:__" as chanel
-    object "__عضو کانال:__" as member
 
+    owner --> user
+    user --> chanel
     owner --> chanel
-    chanel --> member
 }
 
 @enduml
