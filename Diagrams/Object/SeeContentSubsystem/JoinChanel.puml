@@ -1,0 +1,15 @@
+@startuml join_chanel
+
+scale 2
+left to right direction
+skinparam DefaultFontName B Nazanin
+
+
+package "زیرسیستم مشاهده محتوا" {
+    object "__کاربر:__" as user
+    object "__کانال:__" as chanel
+
+    user --> chanel
+}
+
+@enduml

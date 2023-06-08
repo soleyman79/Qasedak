@@ -1,0 +1,22 @@
+@startuml search_chanel
+
+scale 2
+left to right direction
+skinparam DefaultFontName B Nazanin
+
+package "زیرسیستم مشاهده محتوا" {
+    object "__کاربر:__" as user
+    object "__کانال: کانال1__" as chanel1
+    object "__کانال: کانال2__" as chanel2
+    object "__کانال: کانال3__" as chanel3
+    object "__کانال: کانال4__" as chanel4
+
+    user --> chanel1
+    user --> chanel2
+    user --> chanel3
+    user --> chanel4
+}
+
+note "تعداد کانال‌های نمایش داده شده در نمودار باید\nبرابر تعداد کل کانال‌های موجود در سیستم باشد" as N1
+
+@enduml
