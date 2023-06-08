@@ -1,4 +1,4 @@
-@startuml set_manager_profit
+@startuml set_subscription_price
 
 scale 2
 left to right direction
@@ -7,10 +7,8 @@ skinparam DefaultFontName B Nazanin
 package "زیرسیستم تولید محتوا" {
     object "__صاحب کانال:__" as owner
     object "__کانال:__" as chanel
-    object "__اشتراک:__" as subscription
 
     owner --> chanel
-    chanel --> subscription
 }
 
 @enduml
