@@ -1,0 +1,18 @@
+@startuml promote_content
+
+scale 2
+left to right direction
+skinparam DefaultFontName B Nazanin
+
+package "زیرسیستم تولید محتوا" {
+    object "__صاحب کانال:__" as owner
+    object "__مدیر کانال:__" as manager
+    object "__کانال:__" as chanel
+    object "__محتوا:__" as content
+
+    owner --> chanel
+    manager --> chanel
+    chanel --> content
+}
+
+@enduml

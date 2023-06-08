@@ -1,0 +1,16 @@
+@startuml create_chanel
+
+scale 2
+left to right direction
+skinparam DefaultFontName B Nazanin
+
+package "زیرسیستم تولید محتوا" {
+    object "__صاحب کانال:__" as owner
+    object "__کاربر:__" as user
+    object "__کانال:__" as chanel
+
+    user --> owner
+    owner --> chanel
+}
+
+@enduml
