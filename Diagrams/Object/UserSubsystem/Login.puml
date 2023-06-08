@@ -1,4 +1,4 @@
-@startuml signup
+@startuml login
 
 scale 2
 left to right direction
