@@ -1,0 +1,24 @@
+@startuml create_chanel
+
+scale 2
+skinparam DefaultFontName B Nazanin
+skinparam ArrowMessageAlignment right
+
+class "کاربر" as user {
+}
+
+class "کانال" as chanel {
+}
+
+class "عضو کانال" as member {
+}
+
+class "صاحب کانال" as owner {
+}
+
+user "          1" -- "*" chanel
+chanel "        1" o-- "            +" member
+member "1" o-- "0..1" owner
+user "1" o-- "*" member
+
+@enduml

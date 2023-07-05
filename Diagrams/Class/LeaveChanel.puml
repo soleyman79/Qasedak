@@ -1,0 +1,15 @@
+@startuml leave_chanel
+
+scale 2
+skinparam DefaultFontName B Nazanin
+
+
+class "کانال" as chanel {
+}
+
+class "عضو کانال" as member {
+}
+
+chanel "1" o-- "+" member
+
+@enduml

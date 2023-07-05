@@ -1,0 +1,19 @@
+@startuml update_subscription_time
+
+scale 2
+skinparam DefaultFontName B Nazanin
+skinparam ArrowMessageAlignment right
+
+class "کاربر" as user {
+}
+
+class "عضو کانال" as member {
+}
+
+class "اشتراک" as subscription {
+}
+
+user "1" -- "*" member
+member "1" *-- "*" subscription
+
+@enduml

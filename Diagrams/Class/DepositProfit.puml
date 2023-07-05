@@ -1,0 +1,19 @@
+@startuml deposit_profit
+
+scale 2
+skinparam DefaultFontName B Nazanin
+skinparam ArrowMessageAlignment right
+
+class "تولیدکننده محتوا" as producer {
+}
+
+class "کانال" as chanel {
+}
+
+class "کاربر" as user {
+}
+
+producer "  +" o-- "1" chanel
+user "  1" o-- "*" producer
+
+@enduml

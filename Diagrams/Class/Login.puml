@@ -1,0 +1,22 @@
+@startuml login
+
+scale 2
+skinparam DefaultFontName B Nazanin
+
+
+class "کاربر" as user {
+}
+
+class "ایمیل" as address {
+    آدرس ایمیل
+}
+
+class "تلفن" as phone {
+    کد کشور
+    شماره تلفن
+}
+
+user "1" o-left- "1" address
+user "1" o-right- "1" phone
+
+@enduml

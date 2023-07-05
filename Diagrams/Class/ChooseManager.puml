@@ -1,0 +1,23 @@
+@startuml choose_manager
+
+scale 2
+skinparam DefaultFontName B Nazanin
+skinparam ArrowMessageAlignment right
+
+class "صاحب کانال" as owner {
+}
+
+class "کانال" as chanel {
+}
+
+class "عضو کانال" as member {
+}
+
+class "مدیر کانال" as manager {
+}
+
+owner "1" -- "1" chanel
+chanel "1" o-- "+" member
+member "1" o-- "0..1" manager
+
+@enduml
