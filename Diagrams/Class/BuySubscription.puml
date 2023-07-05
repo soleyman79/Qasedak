@@ -8,10 +8,13 @@ class "اشتراک" as subscription {
 }
 
 class "کانال" as chanel {
+    سود ماه جاری
     قیمت اشتراک‌ها
+    ()ساخت اشتراک
 }
 
 class "عضو کانال" as member {
+    اشتراک‌ها
 }
 
 subscription "              *" -down- "1" chanel

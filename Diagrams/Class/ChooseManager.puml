@@ -16,8 +16,9 @@ class "عضو کانال" as member {
 class "مدیر کانال" as manager {
 }
 
-owner "1" -- "1" chanel
-chanel "1" o-- "+" member
-member "1" o-- "0..1" manager
+owner "         1" -- "         1" chanel
+chanel "            1" o-- "            +" member
+member "        1" -- "          0..1" manager
+chanel -- manager
 
 @enduml

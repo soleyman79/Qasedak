@@ -5,6 +5,7 @@ skinparam DefaultFontName B Nazanin
 
 
 class "محتوا" as content {
+    ویژه بودن
 }
 
 class "کانال" as chanel {
@@ -13,7 +14,11 @@ class "کانال" as chanel {
 class "عضو کانال" as member {
 }
 
+class "اشتراک" as subscription{
+}
+
 content "*" --o "1" chanel
 chanel "1" o-left- "+" member
+subscription "*" --* "1" member
 
 @enduml

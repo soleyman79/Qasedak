@@ -4,16 +4,25 @@ scale 2
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
-class "تولیدکننده محتوا" as producer {
+abstract "تولیدکننده محتوا" as producer {
+    درصد سود
 }
 
 class "کانال" as chanel {
+    سود ماه جاری
+    ()محاسبه سود
 }
 
 class "کاربر" as user {
+    اعتبار
 }
 
-producer "  +" o-- "1" chanel
-user "  1" o-- "*" producer
+class "عضو کانال" as member {
+}
+
+chanel "1" -- "             +" member
+member "1" -- "         0..1" producer
+chanel "        *" -- "+" user
+member "                    *" -- "1" user
 
 @enduml

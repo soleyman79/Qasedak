@@ -16,7 +16,11 @@ class "تلفن" as phone {
     شماره تلفن
 }
 
+class "کاربر" as user {
+}
+
 potential_user "1" -left- "1" address
 potential_user "1" -right- "1" phone
+potential_user "1" -down- "1" user
 
 @enduml

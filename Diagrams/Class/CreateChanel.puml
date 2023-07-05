@@ -18,7 +18,7 @@ class "صاحب کانال" as owner {
 
 user "          1" -- "*" chanel
 chanel "        1" o-- "            +" member
-member "1" o-- "0..1" owner
-user "1" o-- "*" member
+member "1" -- "0..1" owner
+user "1" -- "*" member
 
 @enduml

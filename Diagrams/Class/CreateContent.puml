@@ -1,0 +1,20 @@
+@startuml create_content
+
+scale 2
+skinparam DefaultFontName B Nazanin
+skinparam ArrowMessageAlignment right
+
+abstract "تولیدکننده محتوا" as producer {
+}
+
+class "محتوا" as content {
+}
+
+class "کانال" as chanel {
+}
+
+producer "          1" -- "             *" content
+content "           *" -- "             1" chanel
+producer "+" -- "1" chanel
+
+@enduml

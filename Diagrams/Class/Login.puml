@@ -16,7 +16,7 @@ class "تلفن" as phone {
     شماره تلفن
 }
 
-user "1" o-left- "1" address
-user "1" o-right- "1" phone
+user "1" -left- "1" address
+user "1" -right- "1" phone
 
 @enduml

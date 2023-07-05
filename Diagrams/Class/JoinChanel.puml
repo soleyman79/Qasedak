@@ -5,9 +5,11 @@ skinparam DefaultFontName B Nazanin
 
 
 class "کاربر" as user {
+    عضویت‌های کاربر
 }
 
 class "کانال" as chanel {
+    (کاربر)اضافه کردن عضو
 }
 
 class "عضو کانال" as member {
