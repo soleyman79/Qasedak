@@ -1,0 +1,34 @@
+@startuml signup
+
+
+scale 2
+skinparam ActorFontName B Nazanin
+skinparam ParticipantFontName B Nazanin
+skinparam DefaultFontName B Nazanin
+skinparam SequenceGroupHeaderFontName Arial
+skinparam DefaultTextAlignment left
+
+ 
+actor "کاربر بالقوه:" as potential_user
+participant "ایمیل:" as email
+participant "تلفن:" as phone
+participant "کاربر:" as user
+
+potential_user -> potential_user : ثبت‌نام()
+loop
+    potential_user -> potential_user: وارد کردن اطلاعات()
+    alt ورودی منطبق با الگوی ایمیل است
+        break
+            potential_user -> email ** : «ساخت»
+        end
+    else ورودی منطبق با الگوی تلفن است
+        break
+            potential_user -> phone ** : «ساخت»
+        end
+    end
+end
+potential_user -> potential_user : گرفتن رمز عبور()
+potential_user -> user ** : «ساخت»
+
+
+@enduml

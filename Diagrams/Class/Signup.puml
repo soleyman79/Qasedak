@@ -5,6 +5,8 @@ skinparam DefaultFontName B Nazanin
 
 
 class "کاربر بالقوه" as potential_user {
+    ثبت‌نام()
+    وارد کردن اطلاعات()
 }
 
 class "ایمیل" as address {
@@ -17,6 +19,7 @@ class "تلفن" as phone {
 }
 
 class "کاربر" as user {
+    رمز عبور
 }
 
 potential_user "1" -left- "1" address
