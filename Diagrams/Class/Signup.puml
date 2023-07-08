@@ -1,6 +1,6 @@
 @startuml signup
 
-scale 2
+scale 3
 skinparam DefaultFontName B Nazanin
 
 
