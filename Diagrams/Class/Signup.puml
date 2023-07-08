@@ -6,7 +6,7 @@ skinparam DefaultFontName B Nazanin
 
 class "کاربر بالقوه" as potential_user {
     ثبت‌نام()
-    وارد کردن اطلاعات()
+    وارد کردن شناسه()
 }
 
 class "ایمیل" as address {

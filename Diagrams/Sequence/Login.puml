@@ -1,0 +1,26 @@
+@startuml login
+
+
+scale 3
+skinparam ActorFontName B Nazanin
+skinparam ParticipantFontName B Nazanin
+skinparam DefaultFontName B Nazanin
+skinparam SequenceGroupHeaderFontName Arial
+skinparam DefaultTextAlignment left
+
+ 
+actor "کاربر:" as user
+participant "ایمیل:" as email
+participant "تلفن:" as phone
+
+user -> user : ورود به سامانه()
+loop
+    user -> user: وارد کردن اطلاعات کاربری()
+    opt نام کاربری و رمز عبور منطبق است
+        break
+        end
+    end
+end
+
+
+@enduml

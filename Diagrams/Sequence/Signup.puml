@@ -1,7 +1,7 @@
 @startuml signup
 
 
-scale 2
+scale 3
 skinparam ActorFontName B Nazanin
 skinparam ParticipantFontName B Nazanin
 skinparam DefaultFontName B Nazanin
@@ -16,18 +16,18 @@ participant "کاربر:" as user
 
 potential_user -> potential_user : ثبت‌نام()
 loop
-    potential_user -> potential_user: وارد کردن اطلاعات()
-    alt ورودی منطبق با الگوی ایمیل است
+    potential_user -> potential_user: وارد کردن شناسه ()
+    alt ورودی منطبق با الگوی ایمیل است و تکراری نیست
         break
             potential_user -> email ** : «ساخت»
         end
-    else ورودی منطبق با الگوی تلفن است
+    else ورودی منطبق با الگوی تلفن است و تکراری نیست
         break
             potential_user -> phone ** : «ساخت»
         end
     end
 end
-potential_user -> potential_user : گرفتن رمز عبور()
+potential_user -> potential_user : وارد کردن رمز عبور()
 potential_user -> user ** : «ساخت»
 
 
