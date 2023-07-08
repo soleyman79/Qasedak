@@ -1,6 +1,6 @@
 @startuml search_chanel
 
-scale 2
+scale 3
 skinparam DefaultFontName B Nazanin
 
 
@@ -8,7 +8,8 @@ class "کاربر" as user {
 }
 
 class "کانال" as chanel {
-    اطلاعات کانال
+    گرفتن اطلاعات کانال()
+    پیدا کردن کانال(اطلاعات کانال)
 }
 
 user "*" -- "*" chanel

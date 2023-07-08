@@ -2,10 +2,7 @@
 
 
 scale 3
-skinparam ActorFontName B Nazanin
-skinparam ParticipantFontName B Nazanin
-skinparam DefaultFontName B Nazanin
-skinparam SequenceGroupHeaderFontName Arial
+skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment left
 
  
