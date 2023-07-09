@@ -7,10 +7,11 @@ skinparam DefaultTextAlignment center
 
 
 actor ":کاربر" as user
-participant "کانال پیدا شده:کانال" as found_chanel
+participant "کانال پیدا شده\n:کانال" as found_chanel
 participant ":کانال" as chanel
 participant "کانال‌ها" as chanels
-participant "کانال در حال بررسی:کانال" as current_chanel
+participant "کانال در حال بررسی\n:کانال" as current_chanel
+participant "عضو جدید\n:عضو کانال" as member
 
 
 activate user
@@ -35,7 +36,8 @@ deactivate user
 
 activate found_chanel
     |||
-    found_chanel -> user : افزودن عضویت(کانال پیدا شده)
+    found_chanel -> member ** : «create»
+    found_chanel -> user : افزودن عضویت(عضو جدید)
 deactivate found_chanel
 
 activate user
