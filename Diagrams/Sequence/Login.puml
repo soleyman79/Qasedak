@@ -6,9 +6,9 @@ skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
-actor "کاربر:" as user
-participant "ایمیل:" as email
-participant "تلفن:" as phone
+actor ":کاربر" as user
+participant ":ایمیل" as email
+participant ":تلفن" as phone
 
 user -> user : ورود به سامانه()
 activate user

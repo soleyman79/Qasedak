@@ -6,10 +6,10 @@ skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
-actor "کاربر بالقوه:" as potential_user
-participant "ایمیل:" as email
-participant "تلفن:" as phone
-participant "کاربر:" as user
+actor ":کاربر بالقوه" as potential_user
+participant ":ایمیل" as email
+participant ":تلفن" as phone
+participant ":کاربر" as user
 
 potential_user -> potential_user : ثبت‌نام()
 activate potential_user

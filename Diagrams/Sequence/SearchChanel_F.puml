@@ -6,16 +6,16 @@ skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
-participant "کانال:" as chanel
+participant ":کانال" as chanel
 participant "کانال‌ها" as chanels
-participant "کانال: کانال در حال بررسی" as current_chanel
+participant "کانال در حال بررسی:کانال" as current_chanel
 
 note right of chanels
     کانال‌ها مجموعه‌ای از
     کانال‌های موجود است
 end note
 
-[-> chanel : پیدا کردن کانال(اطلاعات کانال)
+chanel <-] : پیدا کردن کانال(اطلاعات کانال)
 activate chanel
 
 loop به ازای هر کانال در حال بررسی در کانال‌ها
@@ -27,11 +27,11 @@ loop به ازای هر کانال در حال بررسی در کانال‌ها
     deactivate current_chanel
 
     break اطلاعات کانال در حال بررسی = اطلاعات کانال
-        [<-- chanel : کانال در حال بررسی
+        chanel -->] : کانال در حال بررسی
     end
 end
 
-[<-- chanel : هیچ‌مقدار
+chanel -->] : هیچ‌مقدار
 deactivate chanel
 
 

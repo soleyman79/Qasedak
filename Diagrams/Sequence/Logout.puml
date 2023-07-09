@@ -6,7 +6,7 @@ skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment left
 
  
-actor "کاربر:" as user
+actor ":کاربر" as user
 
 user -> user : خروج از سامانه()
 activate user

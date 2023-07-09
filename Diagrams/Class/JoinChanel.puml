@@ -1,15 +1,16 @@
 @startuml join_chanel
 
+
 scale 3
 skinparam DefaultFontName B Nazanin
 
 
 class "کاربر" as user {
-    عضویت‌های کاربر
+    افزودن عضویت(کانال)
 }
 
 class "کانال" as chanel {
-    (کاربر)اضافه کردن عضو
+    افزودن عضو(کاربر)
 }
 
 class "عضو کانال" as member {
@@ -17,5 +18,6 @@ class "عضو کانال" as member {
 
 user "*" -- "*" chanel
 chanel "1" o-left- "+" member
+
 
 @enduml
