@@ -1,0 +1,38 @@
+@startuml buy_subscription
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+
+actor ":عضو کانال" as member
+participant ":کانال" as chanel
+participant "اشتراک جدید:اشتراک" as subscription
+participant "کاربر متناظر با\nعضو کانال:کاربر" as user
+
+
+activate member
+member -> chanel : مشاهده اشتراک‌ها()
+activate chanel
+|||
+chanel --> member
+deactivate chanel
+member -> chanel : خرید اشتراک(نوع اشتراک)
+activate chanel
+chanel -> user : اعتبار عضو کانال = گرفتن اعتبار()
+alt اعتبار عضو کانال < قیمت اشتراک
+    chanel --> member : خطای اعتبار ناکافی
+else else
+    chanel -> user : کاهش اعتبار(قیمت اشتراک)
+    activate user
+    deactivate user
+    chanel -> subscription ** : «create»
+    chanel -> member : افزودن اشتراک(اشتراک جدید)
+    deactivate chanel
+    |||
+end
+|||
+deactivate member
+
+@enduml
