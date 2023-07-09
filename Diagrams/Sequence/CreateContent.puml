@@ -6,7 +6,7 @@ skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
-actor ":تولیدکننده محتوا" as producer
+actor "//:تولیدکننده محتوا//" as producer
 participant ":کانال" as chanel
 participant "محتوای جدید:محتوا" as content
 
