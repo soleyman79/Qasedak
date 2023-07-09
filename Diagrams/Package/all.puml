@@ -40,10 +40,10 @@ owner -u-^ producer
 manager -d-^ producer
 
 
-text ^-u- abstract_content
-image ^-d- abstract_content
-video ^-r- abstract_content
-audio ^-l- abstract_content
+text -u-^ abstract_content
+image -d-^ abstract_content
+video -r-^ abstract_content
+audio -l-^ abstract_content
 
 chanel -d- member
 chanel <.d. subscription : <<instantiate>>
