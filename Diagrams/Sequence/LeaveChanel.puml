@@ -1,0 +1,26 @@
+@startuml leave_chanel
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+
+actor ":کاربر" as user
+participant ":عضو کانال" as member
+participant ":کانال" as chanel
+
+activate user
+user -> member : خروج()
+activate member
+member -> chanel : حذف عضو(عضو کانال)
+deactivate member
+activate chanel
+chanel -> user : حذف عضویت(عضو کانال)
+activate user
+deactivate user
+chanel -> member !! : «destory»
+deactivate user
+deactivate chanel
+
+@enduml
