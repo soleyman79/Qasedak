@@ -1,6 +1,7 @@
 @startuml set_subscription_price
 
-scale 2
+
+scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
@@ -8,10 +9,12 @@ class "صاحب کانال" as owner {
 }
 
 class "کانال" as chanel {
-    قیمت اشتراک‌ها
-    ()تعیین اشتراک
+    انواع اشتراک‌ها 
+    تعریف حق عضویت()
+    قیمت‌گذاری(نوع اشتراک)
 }
 
 owner -- chanel
+
 
 @enduml
