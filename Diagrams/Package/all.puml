@@ -1,8 +1,8 @@
-@startuml
+@startuml package
 
-scale 2
-skinparam DefaultFontName B Nazanin
-skinparam ArrowMessageAlignment right
+scale 3
+skinparam DefaultFontName Vazir
+
 
 package "زیرسیستم کاربری" as userSubs {
   class "کاربر" as user
