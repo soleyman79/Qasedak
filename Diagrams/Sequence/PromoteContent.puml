@@ -1,0 +1,44 @@
+@startuml promote_content
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+
+actor ":تولیدکننده محتوا" as producer
+participant "محتویات" as contents
+participant ":کانال" as chanel
+participant "محتوای در حال بررسی:محتوا" as current_content
+
+note right chanel
+محتویات مجموعه همه
+محتواهای کانال است
+end note
+
+activate producer
+producer -> chanel : مشاهده محتویات()
+activate chanel
+deactivate chanel
+
+producer -> chanel : انتخاب محتوا(مشخصات محتوا)
+activate chanel
+
+loop به ازای هر محتوای در حال بررسی در محتویات
+    chanel -> current_content : مشخصات محتوای در حال بررسی \n = گرفتن مشخصات()
+    activate current_content
+    deactivate current_content
+    
+    break مشخصات محتوا = مشخصات محتوای در حال بررسی
+        chanel -> current_content : ارتقای سطح دسترسی()
+        activate current_content
+        deactivate current_content
+    end
+end
+
+|||
+deactivate chanel
+deactivate producer
+
+
+@enduml

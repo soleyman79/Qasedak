@@ -1,6 +1,7 @@
-@startuml create_content
+@startuml promote_content
 
-scale 2
+
+scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
@@ -8,12 +9,18 @@ abstract "تولیدکننده محتوا" as producer {
 }
 
 class "محتوا" as content {
+    مشخصات محتوا
+    گرفتن مشخصات()
+    ارتقای سطح دسترسی()
 }
 
 class "کانال" as chanel {
+    مشاهده محتویات()
+    انتخاب محتوا(مشخصات محتوا)
 }
 
 content "           *" -- "1" chanel
 producer "+" -- "                   1" chanel
+
 
 @enduml
