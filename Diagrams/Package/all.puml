@@ -1,44 +1,59 @@
 @startuml package
 
+
 scale 3
 skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
 
 
-package "زیرسیستم کاربری" as userSubs {
+package "زیرسیستم کاربری" as user_sub {
   class "کاربر" as user
   class "ایمیل" as email
   class "شماره تلفن" as phone
 }
 
-package "زیرسیستم تولید محتوا" as producerSubs {
+package "زیرسیستم تولید محتوا" as producer_sub {
   class "صاحب کانال" as owner
-  class "مدیر کانال" as admin
+  class "مدیر کانال" as manager
+  abstract "تولیدکننده محتوا" as producer
 }
 
-package "زیرسیستم مشاهده محتوا" as viewerSubs {
+package "زیرسیستم مشاهده محتوا" as viewer_sub {
+  
+  class "عضو کانال" as member
+  class "اشتراک" as subscription
+  class "کانال" as chanel
+
   package "محتوا" as content {
+    abstract "محتوا" as abstract_content
     class "متن" as text
     class "عکس" as image
     class "ویدئو" as video
     class "فایل صوتی" as audio
   }
-  class "عضو کانال" as member
-  class "اشتراک" as subscription
-  class "کانال" as channel
 }
 
-user -- email
-user -- phone
+user -l- email
+user -r- phone
 
-owner - admin
+owner -u-^ producer
+manager -d-^ producer
 
-channel -- member
-channel -- subscription
-member - subscription
 
-userSubs ..> producerSubs : <<access>>
-userSubs .> viewerSubs : <<access>>
-producerSubs ..> viewerSubs : <<access>>
-viewerSubs ..> content : <<import>>
+text ^-u- abstract_content
+image ^-d- abstract_content
+video ^-r- abstract_content
+audio ^-l- abstract_content
+
+chanel -d- member
+chanel <.d. subscription : <<instantiate>>
+member -r- subscription
+
+
+user_sub ..> producer_sub : <<access>>
+user_sub ..> viewer_sub : <<access>>
+producer_sub ..> viewer_sub : <<access>>
+viewer_sub ..> content : <<import>>
+
 
 @enduml
