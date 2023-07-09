@@ -1,6 +1,7 @@
 @startuml set_manager_profit
 
-scale 2
+
+scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
@@ -8,13 +9,16 @@ class "صاحب کانال" as owner {
 }
 
 class "کانال" as chanel {
+    تعیین سود مدیر(عضو کانال، مقدار سود)
 }
 
 class "عضو کانال" as member {
+    تعیین سود(مقدار سود)
 }
 
 class "مدیر" as manager {
     مقدار سود
+    تعیین سود(مقدار سود)
 }
 
 owner "1" -- "1" chanel
