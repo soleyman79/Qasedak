@@ -1,0 +1,59 @@
+@startuml deposit_profit
+
+
+scale 4
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+
+actor "زمان" as time
+participant "کانال‌ها" as chanels
+participant "کانال در حال بررسی\n:کانال" as current_chanel
+participant "عضو در حال بررسی\n:عضو کانال" as member
+participant "//تولیدکننده محتوا متناظر با عضو کانال//\n//:تولیدکننده محتوا//" as producer
+participant "کاربر متناظر با عضو کانال\n:کاربر" as user
+
+note right chanels
+کانال‌ها مجموعه همه کانال‌های سیستم است
+end note
+
+activate time
+loop به ازای هر کانال در حال بررسی در کانال‌ها
+    time -> current_chanel : واریز سود()
+    activate current_chanel
+    current_chanel -> current_chanel : سود کل = محاسبه سود کل()
+    activate current_chanel
+    deactivate current_chanel
+    loop به ازای هر عضو در حال بررسی در اعضای کانال
+        opt عضو قابلیت تولید محتوا دارد
+            current_chanel -> member : درصد = گرفتن درصد سود()
+            activate member
+            deactivate member
+            current_chanel -> member : واریز سود(درصد * سود کل) 
+            activate member
+            member -> producer : واریز سود(درصد * سود کل) 
+            activate producer
+            producer -> user : واریز سود(درصد * سود کل) 
+            activate user
+            |||
+            user --> producer
+            deactivate user
+            |||
+            producer --> member
+            deactivate producer
+            |||
+            member --> current_chanel
+            deactivate member
+            |||
+            deactivate current_chanel
+        end
+    end
+    time -> current_chanel : ثبت گزارش واریز()
+    activate current_chanel
+    deactivate current_chanel
+end
+|||
+deactivate time
+
+
+@enduml

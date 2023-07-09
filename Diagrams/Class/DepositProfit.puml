@@ -1,23 +1,30 @@
 @startuml deposit_profit
 
-scale 2
+
+scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
 abstract "تولیدکننده محتوا" as producer {
     درصد سود
+    واریز سود(مقدار سود)
 }
 
 class "کانال" as chanel {
     سود ماه جاری
-    ()محاسبه سود
+    محاسبه سود()
+    واریز سود()
+    ثبت گزارش واریز()
 }
 
 class "کاربر" as user {
     اعتبار
+    واریز سود(مقدار سود)
 }
 
 class "عضو کانال" as member {
+    گرفتن درصد سود()
+    واریز سود(مقدار سود)
 }
 
 chanel "1" -- "             +" member
