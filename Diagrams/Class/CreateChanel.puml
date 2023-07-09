@@ -1,16 +1,20 @@
 @startuml create_chanel
 
-scale 2
+scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
 class "کاربر" as user {
+    درخواست ایجاد کانال(اطلاعات کانال)
+    افزودن عضویت(عضو کانال)
 }
 
 class "کانال" as chanel {
+    گرفتن نام کانال()
 }
 
 class "عضو کانال" as member {
+    ارتقا به تولیدکننده(تولیدکننده محتوا)
 }
 
 class "صاحب کانال" as owner {
