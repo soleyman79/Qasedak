@@ -1,0 +1,44 @@
+@startuml
+
+scale 2
+skinparam DefaultFontName B Nazanin
+skinparam ArrowMessageAlignment right
+
+package "زیرسیستم کاربری" as userSubs {
+  class "کاربر" as user
+  class "ایمیل" as email
+  class "شماره تلفن" as phone
+}
+
+package "زیرسیستم تولید محتوا" as producerSubs {
+  class "صاحب کانال" as owner
+  class "مدیر کانال" as admin
+}
+
+package "زیرسیستم مشاهده محتوا" as viewerSubs {
+  package "محتوا" as content {
+    class "متن" as text
+    class "عکس" as image
+    class "ویدئو" as video
+    class "فایل صوتی" as audio
+  }
+  class "عضو کانال" as member
+  class "اشتراک" as subscription
+  class "کانال" as channel
+}
+
+user -- email
+user -- phone
+
+owner - admin
+
+channel -- member
+channel -- subscription
+member - subscription
+
+userSubs ..> producerSubs : <<access>>
+userSubs .> viewerSubs : <<access>>
+producerSubs ..> viewerSubs : <<access>>
+viewerSubs ..> content : <<import>>
+
+@enduml
