@@ -5,13 +5,18 @@ skinparam DefaultFontName B Nazanin
 
 
 class "محتوا" as content {
-    ویژه بودن
+    گرفتن مشخصات()
+    گرفتن سطح دسترسی()
+    گرفتن خلاصه()
 }
 
 class "کانال" as chanel {
+    مشاهده محتویات()
+    انتخاب محتوا(مشخصات محتوا)
 }
 
 class "عضو کانال" as member {
+    گرفتن سطح دسترسی()
 }
 
 class "اشتراک" as subscription{

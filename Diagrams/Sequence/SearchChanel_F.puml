@@ -22,8 +22,8 @@ loop به ازای هر کانال در حال بررسی در کانال‌ها
     chanel -> current_chanel : اطلاعات کانال در حال بررسی = گرفتن اطلاعات کانال()
     
     activate current_chanel
-        |||
-        current_chanel --> chanel
+    |||
+    current_chanel --> chanel
     deactivate current_chanel
 
     break اطلاعات کانال در حال بررسی = اطلاعات کانال
