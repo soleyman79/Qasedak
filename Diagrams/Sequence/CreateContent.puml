@@ -1,0 +1,22 @@
+@startuml create_content
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+ 
+actor ":تولیدکننده محتوا" as producer
+participant ":کانال" as chanel
+participant "محتوای جدید:محتوا" as content
+
+activate producer
+producer -> chanel : ایجاد محتوا(مشخصات محتوا)
+deactivate producer
+activate chanel
+chanel -> content ** : «create»
+chanel -> chanel : انتشار محتوا(محتوای جدید)
+activate chanel
+deactivate chanel
+
+@enduml
