@@ -1,0 +1,25 @@
+@startuml choose_manager
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+
+actor ":صاحب کانال" as owner
+participant ":کانال" as chanel
+participant "عضو منتخب\n:عضو کانال" as member
+participant "مدیر جدید\n:مدیر کانال" as manager
+
+activate owner
+owner -> chanel : انتخاب مدیر(عضو متنخب)
+activate chanel
+chanel -> manager ** : «create»
+chanel -> member : ارتقا به تولیدکننده(مدیر جدید)
+deactivate chanel
+activate member
+deactivate member
+|||
+
+
+@enduml
