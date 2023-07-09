@@ -3,7 +3,7 @@
 
 scale 3
 skinparam DefaultFontName Vazir
-skinparam DefaultTextAlignment left
+skinparam DefaultTextAlignment center
 
  
 actor "کاربر بالقوه:" as potential_user
@@ -12,8 +12,12 @@ participant "تلفن:" as phone
 participant "کاربر:" as user
 
 potential_user -> potential_user : ثبت‌نام()
+activate potential_user
+
 loop
     potential_user -> potential_user: وارد کردن شناسه ()
+    activate potential_user
+    deactivate potential_user
     alt ورودی منطبق با الگوی ایمیل است و تکراری نیست
         break
             potential_user -> email ** : «create»
@@ -24,8 +28,13 @@ loop
         end
     end
 end
+
 potential_user -> potential_user : وارد کردن رمز عبور()
+activate potential_user
+deactivate potential_user
+
 potential_user -> user ** : «create»
+deactivate potential_user
 
 
 @enduml

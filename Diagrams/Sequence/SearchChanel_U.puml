@@ -23,6 +23,7 @@ ref over chanel, chanels, current_chanel : جستجوی کانال
 chanel --> user
 
 activate user
+deactivate user
 
 note left chanel
 این پیام از قسمت ارجاعی ارسال می‌شود

@@ -9,6 +9,8 @@ skinparam DefaultTextAlignment left
 actor "کاربر:" as user
 
 user -> user : خروج از سامانه()
+activate user
+deactivate user
 
 
 @enduml
