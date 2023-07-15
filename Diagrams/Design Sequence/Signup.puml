@@ -1,40 +1,65 @@
 @startuml signup
 
 
-scale 2
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
 actor ":کاربر بالقوه" as potential_user
+box "«subsystem»\nGUI" #LightBlue
 participant ":نمای ثبت‌نام" as register_facade
+end box
+box "«subsystem»\nزیرسیستم کاربری" #LightPink
+participant ":نمای دروازه" as gate_facade
+end box
+box "«subsystem»\nپایگاه داده" #Moccasin
+participant ":نمای پایگاه داده" as db_facade
+end box
 participant ":ایمیل" as email
 participant ":تلفن" as phone
 participant ":کاربر" as user
 
-potential_user -> potential_user : ثبت‌نام()
 activate potential_user
+potential_user -> register_facade : requestSignup()
+activate register_facade
 
 loop
-    potential_user -> potential_user: وارد کردن شناسه ()
-    activate potential_user
-    deactivate potential_user
-    alt ورودی منطبق با الگوی ایمیل است و تکراری نیست
+    potential_user -> register_facade: signup(username, password)
+    register_facade -> gate_facade: signup(username, password)
+    activate gate_facade
+    gate_facade -> db_facade: isUnique(username)
+    activate db_facade
+    db_facade --> gate_facade
+    deactivate db_facade
+
+    alt نام کاربری تکراری است
+        gate_facade --> register_facade: DuplicateUsernameException
+        register_facade --> potential_user: Error
+    else نام کاربری منطبق با الگوی ایمیل است
         break
-            potential_user -> email ** : «create»
+            gate_facade -> email **: «create»
+            gate_facade -> db_facade: save(username)
+            activate db_facade
+            db_facade --> gate_facade
+            deactivate db_facade
         end
-    else ورودی منطبق با الگوی تلفن است و تکراری نیست
+    else ورودی منطبق با الگوی تلفن است
         break
-            potential_user -> phone ** : «create»
+            gate_facade -> phone **: «create»
+            gate_facade -> db_facade: save(username)
+            activate db_facade
+            db_facade --> gate_facade
+            deactivate db_facade
         end
     end
 end
 
-potential_user -> potential_user : وارد کردن رمز عبور()
-activate potential_user
-deactivate potential_user
-
-potential_user -> user ** : «create»
+gate_facade -> user **: «create»
+gate_facade --> register_facade
+deactivate gate_facade
+register_facade --> potential_user: Success
+deactivate register_facade
 deactivate potential_user
 
 
