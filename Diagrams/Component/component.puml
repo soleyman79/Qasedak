@@ -1,0 +1,54 @@
+@startuml component
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+
+component "مولفه سیستم" as modelComp {
+    component "زیرسیستم کاربری" as userComp
+    component "زیرسیستم تولید محتوا" as produceComp
+    component "زیرسیستم مشاهده محتوا" as viewComp
+    component "زیرسیستم مالی" as financialComp
+
+    component "واسط رابط کاربری" as uiFecade
+    component "واسط پایگاه داده" as dbFacade
+
+    interface " " as viewFinanInt
+
+    portin " " as p1
+    portout " " as p2
+}
+
+component "رابط کاربری" as ui
+component "پایگاه داده" as db
+
+
+financialComp - userComp
+
+financialComp ..> viewFinanInt : use
+viewFinanInt - viewComp
+
+uiFecade -- produceComp
+uiFecade -- userComp
+uiFecade -- viewComp
+
+uiFecade -- p1
+
+ui ..> p1 : use
+
+p2 -- db
+
+userComp -- dbFacade
+produceComp -- dbFacade
+viewComp -- dbFacade
+
+dbFacade ..> p2
+
+userComp -- produceComp
+userComp -- viewComp
+produceComp - viewComp
+
+
+@enduml
