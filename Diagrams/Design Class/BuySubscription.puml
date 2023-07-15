@@ -1,0 +1,31 @@
+@startuml buy_subscription
+
+scale 3
+skinparam DefaultFontName B Nazanin
+skinparam ArrowMessageAlignment right
+
+class "اشتراک" as subscription {
+    قیمت
+}
+
+class "کانال" as chanel {
+    سود ماه جاری
+    مشاهده اشتراک‌ها()
+    خرید اشتراک()
+}
+
+class "عضو کانال" as member {
+    افزودن اشتراک(اشتراک)
+}
+
+class "کاربر" as user {
+    گرفتن اعتبار()
+    کاهش اعتبار(مقدار)
+}
+
+subscription "              *" -down- "1" chanel
+chanel "                    1" o-up- "+" member
+member "1" *-right- "*" subscription
+member "*" -left- "1" user
+
+@enduml

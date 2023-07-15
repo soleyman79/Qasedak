@@ -1,0 +1,34 @@
+@startuml set_manager_profit
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+
+actor ":صاحب کانال" as owner
+participant ":کانال" as chanel
+participant "عضو متناظر با مدیر\n:عضو کانال" as member
+participant ":مدیر کانال" as manager
+
+activate owner
+owner -> chanel : تعیین سود مدیر\n(عضو متناظر با مدیر، مقدار سود)
+activate chanel
+chanel -> member : تعیین سود(مقدار سود)
+activate member
+member -> manager : تعیین سود(مقدار سود)
+|||
+activate manager
+manager --> member
+|||
+deactivate manager
+member --> chanel
+|||
+deactivate member
+chanel --> owner
+|||
+deactivate chanel
+deactivate owner
+
+
+@enduml

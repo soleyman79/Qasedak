@@ -1,0 +1,27 @@
+@startuml cancel
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+ 
+actor ":کاربر" as user
+participant ":ایمیل" as email
+participant ":تلفن" as phone
+
+user -> user : ورود به سامانه()
+activate user
+
+loop
+    user -> user: وارد کردن اطلاعات کاربری()
+    activate user
+    deactivate user
+
+    [o-> user : انصراف
+    deactivate user
+end
+
+deactivate user
+
+@enduml

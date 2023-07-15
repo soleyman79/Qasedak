@@ -1,0 +1,11 @@
+@startuml logout
+
+scale 3
+skinparam DefaultFontName B Nazanin
+
+
+class "کاربر" as user {
+    خروج()
+}
+
+@enduml

@@ -1,0 +1,59 @@
+@startuml see_content
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+
+actor ":عضو کانال" as member
+participant ":اشتراک" as subscription
+participant "محتویات" as contents
+participant ":کانال" as chanel
+participant "محتوای در حال بررسی:محتوا" as current_content
+
+note right chanel
+محتویات مجموعه همه
+محتواهای کانال است
+end note
+
+activate member
+member -> chanel : مشاهده محتویات()
+activate chanel
+deactivate chanel
+
+member -> chanel : انتخاب محتوا(مشخصات محتوا)
+activate chanel
+
+loop به ازای هر محتوای در حال بررسی در محتویات
+    chanel -> current_content : مشخصات محتوای در حال بررسی \n = گرفتن مشخصات()
+    activate current_content
+    deactivate current_content
+    
+    break مشخصات محتوا = مشخصات محتوای در حال بررسی
+        chanel -> current_content : سطح دسترسی محتوای در حال بررسی \n = گرفتن سطح دسترسی()
+        activate current_content
+        deactivate current_content
+        
+        chanel -> member : سطح دسترسی عضو کانال \n = گرفتن سطح دسترسی()
+        activate member
+        deactivate member
+        
+        alt سطح دسترسی عضو کانال < سطح دسترسی محتوای در حال بررسی
+            chanel -> current_content : خلاصه محتوای در حال بررسی \n = گرفتن خلاصه()
+            activate current_content
+            deactivate current_content
+            chanel --> member : خلاصه محتوای در حال بررسی
+        else else
+            chanel --> member : محتوای در حال بررسی 
+            deactivate chanel
+        end
+    end
+end
+
+|||
+deactivate chanel
+deactivate member
+
+
+@enduml

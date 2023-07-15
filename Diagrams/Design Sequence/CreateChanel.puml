@@ -1,0 +1,54 @@
+@startuml create_chanel
+
+
+scale 4
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+ 
+actor ":کاربر" as user
+participant "کانال‌ها" as chanels
+participant "کانال در حال بررسی\n:کانال" as current_chanel
+participant "کانال جدید\n:کانال" as new_chanel
+participant "اولین عضو\n:عضو کانال" as first_member
+participant ":صاحب کانال" as owner
+
+
+note left chanels
+کانال‌ها مجموعه همه
+کانال‌های سیستم است
+end note
+
+note right user
+اطلاعات کانال شامل
+نام کانال نیز هست
+end note
+
+user -> user : درخواست ایجاد کانال(اطلاعات کانال)
+activate user
+loop به ازای هر کانال در حال بررسی در کانال‌ها
+    user -> current_chanel : نام کانال در حال بررسی = گرفتن نام کانال()
+    activate current_chanel
+    |||
+    break نام کانال = نام کانال در حال بررسی
+        current_chanel --> user : خطای نام تکراری
+        |||
+        deactivate current_chanel
+    end
+else else
+    user -> new_chanel ** : «create»
+    activate new_chanel
+    new_chanel -> first_member ** : «create»
+    new_chanel -> owner ** : «create»
+    new_chanel -> first_member : ارتقا به تولیدکننده(صاحب کانال)
+    activate first_member
+    deactivate first_member
+    new_chanel -> user : افزودن عضویت(اولین عضو)
+    activate user
+    deactivate user
+end
+|||
+deactivate
+
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml leave_chanel
+
+
+scale 3
+skinparam DefaultFontName B Nazanin
+
+
+class "کانال" as chanel {
+    (عضو کانال)حذف عضو
+}
+
+class "عضو کانال" as member {
+    ()خروج
+}
+
+class "کاربر" as user {
+    (عضو کانال)حذف عضویت
+}
+
+chanel "    1" o-- "    +" member
+member "1" -- "*" user
+
+
+@enduml

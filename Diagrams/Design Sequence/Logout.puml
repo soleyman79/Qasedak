@@ -1,0 +1,16 @@
+@startuml logout
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment left
+
+ 
+actor ":کاربر" as user
+
+user -> user : خروج از سامانه()
+activate user
+deactivate user
+
+
+@enduml

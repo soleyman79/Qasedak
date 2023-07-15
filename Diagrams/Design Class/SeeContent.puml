@@ -1,0 +1,29 @@
+@startuml see_content
+
+scale 2
+skinparam DefaultFontName B Nazanin
+
+
+class "محتوا" as content {
+    گرفتن مشخصات()
+    گرفتن سطح دسترسی()
+    گرفتن خلاصه()
+}
+
+class "کانال" as chanel {
+    مشاهده محتویات()
+    انتخاب محتوا(مشخصات محتوا)
+}
+
+class "عضو کانال" as member {
+    گرفتن سطح دسترسی()
+}
+
+class "اشتراک" as subscription{
+}
+
+content "*" --o "1" chanel
+chanel "1" o-left- "+" member
+subscription "*" --* "1" member
+
+@enduml

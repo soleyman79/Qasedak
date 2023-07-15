@@ -1,0 +1,41 @@
+@startuml signup
+
+
+scale 2
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+ 
+actor ":کاربر بالقوه" as potential_user
+participant ":نمای ثبت‌نام" as register_facade
+participant ":ایمیل" as email
+participant ":تلفن" as phone
+participant ":کاربر" as user
+
+potential_user -> potential_user : ثبت‌نام()
+activate potential_user
+
+loop
+    potential_user -> potential_user: وارد کردن شناسه ()
+    activate potential_user
+    deactivate potential_user
+    alt ورودی منطبق با الگوی ایمیل است و تکراری نیست
+        break
+            potential_user -> email ** : «create»
+        end
+    else ورودی منطبق با الگوی تلفن است و تکراری نیست
+        break
+            potential_user -> phone ** : «create»
+        end
+    end
+end
+
+potential_user -> potential_user : وارد کردن رمز عبور()
+activate potential_user
+deactivate potential_user
+
+potential_user -> user ** : «create»
+deactivate potential_user
+
+
+@enduml

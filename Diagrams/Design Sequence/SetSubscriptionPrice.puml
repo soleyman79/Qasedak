@@ -1,0 +1,22 @@
+@startuml set_subscription_price
+
+
+scale 3
+skinparam DefaultFontName Vazir
+skinparam DefaultTextAlignment center
+
+actor ":صاحب کانال" as owner
+participant ":کانال" as chanel
+
+activate owner
+owner -> chanel : تعریف حق عضویت()
+activate chanel
+loop به ازای هر نوع اشتراک در اشتراک‌های کانال
+    owner -> chanel : قیمت‌گذاری(نوع اشتراک)
+    activate chanel
+    deactivate chanel
+end
+chanel --> owner
+deactivate chanel
+
+@enduml
