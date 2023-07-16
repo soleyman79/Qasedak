@@ -1,15 +1,28 @@
 @startuml logout
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
-skinparam DefaultTextAlignment left
+skinparam DefaultTextAlignment center
 
  
 actor ":کاربر" as user
+box "«subsystem»\nGUI" #LightBlue
+participant ":نمای خروج" as ui_facade
+end box
+box "«subsystem»\nزیرسیستم کاربری" #LightPink
+participant ":نمای دروازه" as gate_facade
+end box
 
-user -> user : خروج از سامانه()
 activate user
+user -> ui_facade: requestLogout()
+activate ui_facade
+ui_facade -> gate_facade: logout(کاربر)
+activate gate_facade
+gate_facade --> ui_facade: پیام موفقیت
+deactivate gate_facade
+ui_facade --> user: پیام موفقیت
+deactivate ui_facade
 deactivate user
 
 
