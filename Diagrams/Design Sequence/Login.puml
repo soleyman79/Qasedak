@@ -8,40 +8,40 @@ skinparam DefaultTextAlignment center
  
 actor ":کاربر" as user
 box "«subsystem»\nGUI" #LightBlue
-participant ":نمای ورود" as ui_facade
+participant ":loginFacade" as ui
 end box
 box "«subsystem»\nزیرسیستم کاربری" #LightPink
-participant ":نمای دروازه" as gate_facade
+participant ":entryFacade" as entry_facade
 end box
 box "«subsystem»\nپایگاه داده" #Moccasin
-participant ":نمای پایگاه داده" as db_facade
+participant ":databaseFacade" as db_facade
 end box
 
 activate user
-user -> ui_facade: requestLogin()
-activate ui_facade
+user -> ui: requestLogin()
+activate ui
 
 loop
-    user -> ui_facade: login(نام کاربری، رمز عبور)
-    ui_facade -> gate_facade: login(نام کاربری، رمز عبور)
-    activate gate_facade
-    gate_facade -> db_facade: getUser(نام کاربری)
+    user -> ui: login(username password)
+    ui -> entry_facade: login(username password)
+    activate entry_facade
+    entry_facade -> db_facade: getUser(username)
     activate db_facade
-    db_facade --> gate_facade
+    db_facade --> entry_facade
     deactivate db_facade
 
     alt کاربری یافت نشده است
-        gate_facade --> ui_facade: خطای یافت نشدن کاربر
-        ui_facade --> user: خطای یافت نشدن کاربر
+        entry_facade --> ui: userNotFound
+        ui --> user: userNotFound
     else رمز عبور منطبق نیست
-        gate_facade --> ui_facade: خطای رمز عبور اشتباه
-        ui_facade --> user: خطای رمز عبور اشتباه
+        entry_facade --> ui: wrongPassword
+        ui --> user: wrongPassword
     else
         break
-            gate_facade --> ui_facade: پیام موفقیت
-            deactivate gate_facade
-            ui_facade --> user: پیام موفقیت
-            deactivate ui_facade
+            entry_facade --> ui: Success
+            deactivate entry_facade
+            ui --> user: Success
+            deactivate ui
         end
     end
 end

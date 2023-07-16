@@ -8,62 +8,62 @@ skinparam DefaultTextAlignment center
  
 actor ":کاربر بالقوه" as potential_user
 box "«subsystem»\nGUI" #LightBlue
-participant ":نمای ثبت‌نام" as ui_facade
+participant ":signupFacade" as ui
 end box
 box "«subsystem»\nزیرسیستم کاربری" #LightPink
-participant ":نمای دروازه" as gate_facade
+participant ":entryFacade" as entry_facade
 end box
 box "«subsystem»\nپایگاه داده" #Moccasin
-participant ":نمای پایگاه داده" as db_facade
+participant ":databaseFacade" as db_facade
 end box
-participant ":ایمیل" as email
-participant ":تلفن" as phone
-participant ":کاربر" as user
+participant ":email" as email
+participant ":phone" as phone
+participant ":user" as user
 
 activate potential_user
-potential_user -> ui_facade : requestSignup()
-activate ui_facade
+potential_user -> ui : requestSignup()
+activate ui
 
 loop
-    potential_user -> ui_facade: signup(نام کاربری، رمز)
-    ui_facade -> gate_facade: signup(نام کاربری، رمز)
-    activate gate_facade
-    gate_facade -> db_facade: exists(نام کاربری)
+    potential_user -> ui: signup(username, password)
+    ui -> entry_facade: signup(username, password)
+    activate entry_facade
+    entry_facade -> db_facade: exists(username)
     activate db_facade
-    db_facade --> gate_facade
+    db_facade --> entry_facade
     deactivate db_facade
 
     alt نام کاربری تکراری است
-        gate_facade --> ui_facade: خطای نام کاربری تکراری
-        ui_facade --> potential_user: خطای نام کاربری تکراری
+        entry_facade --> ui: DuplicateUsername
+        ui --> potential_user: DuplicateUsername
     else نام کاربری منطبق با الگوی ایمیل است
         break
-            gate_facade -> email **: «create»
-            gate_facade -> db_facade: save(ایمیل)
+            entry_facade -> email **: «create»
+            entry_facade -> db_facade: save(email)
             activate db_facade
-            db_facade --> gate_facade
+            db_facade --> entry_facade
             deactivate db_facade
         end
     else ورودی منطبق با الگوی تلفن است
         break
-            gate_facade -> phone **: «create»
-            gate_facade -> db_facade: save(تلفن)
+            entry_facade -> phone **: «create»
+            entry_facade -> db_facade: save(phone)
             activate db_facade
-            db_facade --> gate_facade
+            db_facade --> entry_facade
             deactivate db_facade
         end
     end
 end
 
-gate_facade -> user **: «create»
-gate_facade -> db_facade: save(کاربر)
+entry_facade -> user **: «create»
+entry_facade -> db_facade: save(user)
 activate db_facade
-db_facade --> gate_facade
+db_facade --> entry_facade
 deactivate db_facade
-gate_facade --> ui_facade
-deactivate gate_facade
-ui_facade --> potential_user: پبام موفقیت
-deactivate ui_facade
+entry_facade --> ui
+deactivate entry_facade
+ui --> potential_user: Success
+deactivate ui
 deactivate potential_user
 
 

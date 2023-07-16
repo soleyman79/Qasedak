@@ -8,21 +8,21 @@ skinparam DefaultTextAlignment center
  
 actor ":کاربر" as user
 box "«subsystem»\nGUI" #LightBlue
-participant ":نمای خروج" as ui_facade
+participant ":logoutFacade" as ui
 end box
 box "«subsystem»\nزیرسیستم کاربری" #LightPink
-participant ":نمای دروازه" as gate_facade
+participant ":entryFacade" as entry_facade
 end box
 
 activate user
-user -> ui_facade: requestLogout()
-activate ui_facade
-ui_facade -> gate_facade: logout(کاربر)
-activate gate_facade
-gate_facade --> ui_facade: پیام موفقیت
-deactivate gate_facade
-ui_facade --> user: پیام موفقیت
-deactivate ui_facade
+user -> ui: requestLogout()
+activate ui
+ui -> entry_facade: logout(user)
+activate entry_facade
+entry_facade --> ui: Success
+deactivate entry_facade
+ui --> user: Success
+deactivate ui
 deactivate user
 
 
