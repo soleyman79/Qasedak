@@ -25,21 +25,21 @@ potential_user -> register_facade : requestSignup()
 activate register_facade
 
 loop
-    potential_user -> register_facade: signup(username, password)
-    register_facade -> gate_facade: signup(username, password)
+    potential_user -> register_facade: signup(نام کاربری، رمز)
+    register_facade -> gate_facade: signup(نام کاربری، رمز)
     activate gate_facade
-    gate_facade -> db_facade: isUnique(username)
+    gate_facade -> db_facade: exists(نام کاربری)
     activate db_facade
     db_facade --> gate_facade
     deactivate db_facade
 
     alt نام کاربری تکراری است
-        gate_facade --> register_facade: DuplicateUsernameException
-        register_facade --> potential_user: Error
+        gate_facade --> register_facade: خطای نام کاربری تکراری
+        register_facade --> potential_user: خطای نام کاربری تکراری
     else نام کاربری منطبق با الگوی ایمیل است
         break
             gate_facade -> email **: «create»
-            gate_facade -> db_facade: save(username)
+            gate_facade -> db_facade: save(ایمیل)
             activate db_facade
             db_facade --> gate_facade
             deactivate db_facade
@@ -47,7 +47,7 @@ loop
     else ورودی منطبق با الگوی تلفن است
         break
             gate_facade -> phone **: «create»
-            gate_facade -> db_facade: save(username)
+            gate_facade -> db_facade: save(تلفن)
             activate db_facade
             db_facade --> gate_facade
             deactivate db_facade
@@ -56,9 +56,13 @@ loop
 end
 
 gate_facade -> user **: «create»
+gate_facade -> db_facade: save(کاربر)
+activate db_facade
+db_facade --> gate_facade
+deactivate db_facade
 gate_facade --> register_facade
 deactivate gate_facade
-register_facade --> potential_user: Success
+register_facade --> potential_user: پبام موفقیت
 deactivate register_facade
 deactivate potential_user
 
