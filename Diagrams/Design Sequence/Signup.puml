@@ -8,7 +8,7 @@ skinparam DefaultTextAlignment center
  
 actor ":کاربر بالقوه" as potential_user
 box "«subsystem»\nGUI" #LightBlue
-participant ":نمای ثبت‌نام" as register_facade
+participant ":نمای ثبت‌نام" as ui_facade
 end box
 box "«subsystem»\nزیرسیستم کاربری" #LightPink
 participant ":نمای دروازه" as gate_facade
@@ -21,12 +21,12 @@ participant ":تلفن" as phone
 participant ":کاربر" as user
 
 activate potential_user
-potential_user -> register_facade : requestSignup()
-activate register_facade
+potential_user -> ui_facade : requestSignup()
+activate ui_facade
 
 loop
-    potential_user -> register_facade: signup(نام کاربری، رمز)
-    register_facade -> gate_facade: signup(نام کاربری، رمز)
+    potential_user -> ui_facade: signup(نام کاربری، رمز)
+    ui_facade -> gate_facade: signup(نام کاربری، رمز)
     activate gate_facade
     gate_facade -> db_facade: exists(نام کاربری)
     activate db_facade
@@ -34,8 +34,8 @@ loop
     deactivate db_facade
 
     alt نام کاربری تکراری است
-        gate_facade --> register_facade: خطای نام کاربری تکراری
-        register_facade --> potential_user: خطای نام کاربری تکراری
+        gate_facade --> ui_facade: خطای نام کاربری تکراری
+        ui_facade --> potential_user: خطای نام کاربری تکراری
     else نام کاربری منطبق با الگوی ایمیل است
         break
             gate_facade -> email **: «create»
@@ -60,10 +60,10 @@ gate_facade -> db_facade: save(کاربر)
 activate db_facade
 db_facade --> gate_facade
 deactivate db_facade
-gate_facade --> register_facade
+gate_facade --> ui_facade
 deactivate gate_facade
-register_facade --> potential_user: پبام موفقیت
-deactivate register_facade
+ui_facade --> potential_user: پبام موفقیت
+deactivate ui_facade
 deactivate potential_user
 
 
