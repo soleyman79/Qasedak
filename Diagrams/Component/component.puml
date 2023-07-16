@@ -7,13 +7,10 @@ skinparam DefaultTextAlignment center
 
 
 component "مولفه سیستم" as modelComp {
-    component "زیرسیستم کاربری" as userComp
-    component "زیرسیستم تولید محتوا" as produceComp
-    component "زیرسیستم مشاهده محتوا" as viewComp
-    component "زیرسیستم مالی" as financialComp
-
-    component "واسط رابط کاربری" as uiFecade
-    component "واسط پایگاه داده" as dbFacade
+    component "زیرسیستم کاربری" <<subsystem>> as userComp
+    component "زیرسیستم تولید محتوا" <<subsystem>> as produceComp
+    component "زیرسیستم مشاهده محتوا" <<subsystem>> as viewComp
+    component "زیرسیستم مالی" <<subsystem>> as financialComp
 
     interface " " as viewFinanInt
 
@@ -21,34 +18,28 @@ component "مولفه سیستم" as modelComp {
     portout " " as p2
 }
 
-component "رابط کاربری" as ui
-component "پایگاه داده" as db
+component "رابط کاربری" <<subsystem>> as ui
+component "پایگاه داده" <<subsystem>> as db
 
-
-financialComp - userComp
+userComp - financialComp
 
 financialComp ..> viewFinanInt : use
 viewFinanInt - viewComp
 
-uiFecade -- produceComp
-uiFecade -- userComp
-uiFecade -- viewComp
-
-uiFecade -- p1
+produceComp -- p1
+userComp -- p1
+viewComp -- p1
 
 ui ..> p1 : use
 
 p2 -- db
 
-userComp -- dbFacade
-produceComp -- dbFacade
-viewComp -- dbFacade
-
-dbFacade ..> p2
+userComp ..> p2
+produceComp ..> p2
+viewComp ..> p2
 
 userComp -- produceComp
 userComp -- viewComp
 produceComp - viewComp
-
 
 @enduml
