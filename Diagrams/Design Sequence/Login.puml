@@ -1,28 +1,52 @@
 @startuml login
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
 actor ":کاربر" as user
-participant ":ایمیل" as email
-participant ":تلفن" as phone
+box "«subsystem»\nGUI" #LightBlue
+participant ":نمای ورود" as ui_facade
+end box
+box "«subsystem»\nزیرسیستم کاربری" #LightPink
+participant ":نمای دروازه" as gate_facade
+end box
+box "«subsystem»\nپایگاه داده" #Moccasin
+participant ":نمای پایگاه داده" as db_facade
+end box
 
-user -> user : ورود به سامانه()
 activate user
+user -> ui_facade: requestLogin()
+activate ui_facade
 
 loop
-    user -> user: وارد کردن اطلاعات کاربری()
-    activate user
-    deactivate user
+    user -> ui_facade: login(نام کاربری، رمز عبور)
+    ui_facade -> gate_facade: login(نام کاربری، رمز عبور)
+    activate gate_facade
+    gate_facade -> db_facade: getUser(نام کاربری)
+    activate db_facade
+    db_facade --> gate_facade
+    deactivate db_facade
 
-    break نام کاربری و رمز عبور منطبق هستند
-        |||
+    alt کاربری یافت نشده است
+        gate_facade --> ui_facade: خطای یافت نشدن کاربر
+        ui_facade --> user: خطای یافت نشدن کاربر
+    else رمز عبور منطبق نیست
+        gate_facade --> ui_facade: خطای رمز عبور اشتباه
+        ui_facade --> user: خطای رمز عبور اشتباه
+    else
+        break
+            gate_facade --> ui_facade: پیام موفقیت
+            deactivate gate_facade
+            ui_facade --> user: پیام موفقیت
+            deactivate ui_facade
+        end
     end
 end
 
 deactivate user
+
 
 @enduml
