@@ -21,6 +21,28 @@ component "مولفه سیستم" as modelComp {
 component "رابط کاربری" <<subsystem>> as ui
 component "پایگاه داده" <<subsystem>> as db
 
+note right of ui
+
+
+                UI
+
+
+end note
+
+note right of modelComp
+Business
+logic
+end note
+
+note right of db
+
+
+                Data
+
+
+end note
+
+
 userComp - financialComp
 
 financialComp ..> viewFinanInt : use
