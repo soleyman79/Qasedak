@@ -7,52 +7,69 @@ skinparam DefaultTextAlignment center
 
 
 actor ":عضو کانال" as member
-participant ":اشتراک" as subscription
-participant "محتویات" as contents
-participant ":کانال" as chanel
-participant "محتوای در حال بررسی:محتوا" as current_content
+box "«subsystem»\nGUI" #LightBlue
+participant ":ContentFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
+participant ":ContentFacade" as contentFacade
+end box
+participant "member\n:Member" as memberObj
+participant "chanelContents\n:ContentsCatalog" as contents
+participant "memberChanel\n:Chanel" as chanel
+participant ":Subscription" as subscription
+participant "currentContent\n:Content" as currentContent
 
-note right chanel
-محتویات مجموعه همه
-محتواهای کانال است
-end note
 
 activate member
-member -> chanel : مشاهده محتویات()
+member -> ui: getContents(member)
+activate ui
+ui -> contentFacade: getContents(member)
+activate contentFacade
+contentFacade -> chanel: getContents()
 activate chanel
+chanel --> contentFacade: contentsCatalog
 deactivate chanel
+contentFacade --> ui: cotents
+deactivate contentFacade
+ui --> member
 
-member -> chanel : انتخاب محتوا(مشخصات محتوا)
+member -> ui : selectContent\n(member, contentInfo)
+ui -> contentFacade: selectContent\n(member, contentInfo)
+activate contentFacade
+contentFacade -> chanel: selectContent(contentInfo)
 activate chanel
-
 loop به ازای هر محتوای در حال بررسی در محتویات
-    chanel -> current_content : مشخصات محتوای در حال بررسی \n = گرفتن مشخصات()
-    activate current_content
-    deactivate current_content
+    chanel -> currentContent : currentContentInfo\n = getInfo()
+    activate currentContent
+    deactivate currentContent
     
     break مشخصات محتوا = مشخصات محتوای در حال بررسی
-        chanel -> current_content : سطح دسترسی محتوای در حال بررسی \n = گرفتن سطح دسترسی()
-        activate current_content
-        deactivate current_content
+        chanel -> currentContent: currentContentAccessLevel\n = getAccessLevel()
+        activate currentContent
+        deactivate currentContent
         
-        chanel -> member : سطح دسترسی عضو کانال \n = گرفتن سطح دسترسی()
-        activate member
-        deactivate member
+        chanel -> memberObj: memberAccessLevel\n = getAccessLevel()
+        activate memberObj
+        deactivate memberObj
         
         alt سطح دسترسی عضو کانال < سطح دسترسی محتوای در حال بررسی
-            chanel -> current_content : خلاصه محتوای در حال بررسی \n = گرفتن خلاصه()
-            activate current_content
-            deactivate current_content
-            chanel --> member : خلاصه محتوای در حال بررسی
+            chanel -> currentContent: currentContentSummary\n = getSummary()
+            activate currentContent
+            deactivate currentContent
+            chanel --> contentFacade: currentSummary
+            contentFacade --> ui: summary
+            ui --> member: summary
         else else
-            chanel --> member : محتوای در حال بررسی 
+            chanel --> contentFacade: currentContet
             deactivate chanel
+            contentFacade --> ui: content
+            deactivate contentFacade
+            ui --> member: content
+            deactivate ui
         end
     end
 end
 
-|||
-deactivate chanel
 deactivate member
 
 
