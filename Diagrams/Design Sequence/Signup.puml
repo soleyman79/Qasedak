@@ -27,27 +27,22 @@ activate ui
 
 loop
     potentialUser -> ui: signup(username, password)
-    ui -> entryFacade
-    : signup(username, password)
+    ui -> entryFacade: signup(username, password)
     activate entryFacade
     
-    entryFacade
-     -> db: exists(username)
+    entryFacade -> db: exists(username)
     activate db
     db --> entryFacade
     
     deactivate db
 
     alt نام کاربری تکراری است
-        entryFacade
-         --> ui: DuplicateUsername
+        entryFacade --> ui: DuplicateUsername
         ui --> potentialUser: DuplicateUsername
     else نام کاربری منطبق با الگوی ایمیل است
         break
-            entryFacade
-             -> email **: «create»
-            entryFacade
-             -> db: save(email)
+            entryFacade -> email **: «create»
+            entryFacade -> db: save(email)
             activate db
             db --> entryFacade
             
@@ -55,10 +50,8 @@ loop
         end
     else ورودی منطبق با الگوی تلفن است
         break
-            entryFacade
-             -> phone **: «create»
-            entryFacade
-             -> db: save(phone)
+            entryFacade -> phone **: «create»
+            entryFacade -> db: save(phone)
             activate db
             db --> entryFacade
             
@@ -67,16 +60,13 @@ loop
     end
 end
 
-entryFacade
- -> user **: «create»
-entryFacade
- -> db: save(user)
+entryFacade -> user **: «create»
+entryFacade -> db: save(user)
 activate db
 db --> entryFacade
 
 deactivate db
-entryFacade
- --> ui
+entryFacade --> ui
 deactivate entryFacade
 
 ui --> potentialUser: Success
