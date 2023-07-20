@@ -1,38 +1,68 @@
 @startuml buy_subscription
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
 
 actor ":عضو کانال" as member
-participant ":کانال" as chanel
-participant "اشتراک جدید:اشتراک" as subscription
-participant "کاربر متناظر با\nعضو کانال:کاربر" as user
+box "«subsystem»\nGUI" #LightBlue
+participant ":SubscriptionFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
+participant ":ContentFacade" as contentFacade
+end box
+participant "member\n:Member" as memberObj
+box "«subsystem»\nزیرسیستم مالی" #Moccasin
+participant ":MonetaryFacade" as monetary
+end box
+participant "memberChanel\n:Chanel" as chanel
+participant "newSubscription\n:Subscription" as subscription
+participant "memberUser\n:User" as user
 
 
 activate member
-member -> chanel : مشاهده اشتراک‌ها()
+member -> ui: seeSubscription(member)
+activate ui
+ui -> contentFacade: seeSubscription(member)
+activate contentFacade
+contentFacade -> chanel: getSubscriptions()
 activate chanel
-|||
-chanel --> member
+chanel --> contentFacade: subscriptions
 deactivate chanel
-member -> chanel : خرید اشتراک(نوع اشتراک)
-activate chanel
-chanel -> user : اعتبار عضو کانال = گرفتن اعتبار()
+contentFacade --> ui: subscriptions
+deactivate contentFacade
+ui --> member: subscriptions
+
+member -> ui: buySubscription\n(member, subscriptionType)
+ui -> monetary: buySubcription\n(member, subscriptionType)
+activate monetary
+monetary -> user: userCredit = getCredit()
+activate user
+deactivate user
+
 alt اعتبار عضو کانال < قیمت اشتراک
-    chanel --> member : خطای اعتبار ناکافی
+    monetary --> ui: InsufficientCredit
+    ui --> member: insufficientCredit
 else else
-    chanel -> user : کاهش اعتبار(قیمت اشتراک)
+    monetary -> chanel: getFee(subscriptionType)
+    activate chanel
+    deactivate chanel
+    monetary -> user: decreaseCredit(subscriptionFee)
     activate user
     deactivate user
-    chanel -> subscription ** : «create»
-    chanel -> member : افزودن اشتراک(اشتراک جدید)
-    deactivate chanel
-    |||
+    monetary -> subscription **: «create»
+    monetary -> memberObj: addSubscription\n(newSubscription)
+    activate memberObj
+    deactivate memberObj
+    monetary --> ui: Success
+    deactivate monetary
+    ui --> member: Success
+    deactivate ui
 end
-|||
+
 deactivate member
+
 
 @enduml
