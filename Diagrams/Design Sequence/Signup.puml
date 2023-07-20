@@ -6,65 +6,82 @@ skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
-actor ":کاربر بالقوه" as potential_user
+actor ":کاربر بالقوه" as potentialUser
 box "«subsystem»\nGUI" #LightBlue
-participant ":signupFacade" as ui
+participant ":SignupFacade" as ui
 end box
 box "«subsystem»\nزیرسیستم کاربری" #LightPink
-participant ":entryFacade" as entry_facade
+participant ":EntryFacade" as entryFacade
+
 end box
 box "«subsystem»\nپایگاه داده" #Moccasin
-participant ":databaseFacade" as db_facade
+participant ":DatabaseFacade" as db
 end box
-participant ":email" as email
-participant ":phone" as phone
-participant ":user" as user
+participant ":Email" as email
+participant ":Phone" as phone
+participant ":User" as user
 
-activate potential_user
-potential_user -> ui : requestSignup()
+activate potentialUser
+potentialUser -> ui : requestSignup()
 activate ui
 
 loop
-    potential_user -> ui: signup(username, password)
-    ui -> entry_facade: signup(username, password)
-    activate entry_facade
-    entry_facade -> db_facade: exists(username)
-    activate db_facade
-    db_facade --> entry_facade
-    deactivate db_facade
+    potentialUser -> ui: signup(username, password)
+    ui -> entryFacade
+    : signup(username, password)
+    activate entryFacade
+    
+    entryFacade
+     -> db: exists(username)
+    activate db
+    db --> entryFacade
+    
+    deactivate db
 
     alt نام کاربری تکراری است
-        entry_facade --> ui: DuplicateUsername
-        ui --> potential_user: DuplicateUsername
+        entryFacade
+         --> ui: DuplicateUsername
+        ui --> potentialUser: DuplicateUsername
     else نام کاربری منطبق با الگوی ایمیل است
         break
-            entry_facade -> email **: «create»
-            entry_facade -> db_facade: save(email)
-            activate db_facade
-            db_facade --> entry_facade
-            deactivate db_facade
+            entryFacade
+             -> email **: «create»
+            entryFacade
+             -> db: save(email)
+            activate db
+            db --> entryFacade
+            
+            deactivate db
         end
     else ورودی منطبق با الگوی تلفن است
         break
-            entry_facade -> phone **: «create»
-            entry_facade -> db_facade: save(phone)
-            activate db_facade
-            db_facade --> entry_facade
-            deactivate db_facade
+            entryFacade
+             -> phone **: «create»
+            entryFacade
+             -> db: save(phone)
+            activate db
+            db --> entryFacade
+            
+            deactivate db
         end
     end
 end
 
-entry_facade -> user **: «create»
-entry_facade -> db_facade: save(user)
-activate db_facade
-db_facade --> entry_facade
-deactivate db_facade
-entry_facade --> ui
-deactivate entry_facade
-ui --> potential_user: Success
+entryFacade
+ -> user **: «create»
+entryFacade
+ -> db: save(user)
+activate db
+db --> entryFacade
+
+deactivate db
+entryFacade
+ --> ui
+deactivate entryFacade
+
+ui --> potentialUser: Success
 deactivate ui
-deactivate potential_user
+deactivate potentialUser
 
 
 @enduml

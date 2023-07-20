@@ -8,13 +8,13 @@ skinparam DefaultTextAlignment center
  
 actor ":کاربر" as user
 box "«subsystem»\nGUI" #LightBlue
-participant ":loginFacade" as ui
+participant ":LoginFacade" as ui
 end box
 box "«subsystem»\nزیرسیستم کاربری" #LightPink
-participant ":entryFacade" as entry_facade
+participant ":EntryFacade" as entryFacade
 end box
 box "«subsystem»\nپایگاه داده" #Moccasin
-participant ":databaseFacade" as db_facade
+participant ":DatabaseFacade" as db
 end box
 
 activate user
@@ -23,23 +23,23 @@ activate ui
 
 loop
     user -> ui: login(username password)
-    ui -> entry_facade: login(username password)
-    activate entry_facade
-    entry_facade -> db_facade: getUser(username)
-    activate db_facade
-    db_facade --> entry_facade
-    deactivate db_facade
+    ui -> entryFacade: login(username password)
+    activate entryFacade
+    entryFacade -> db: getUser(username)
+    activate db
+    db --> entryFacade
+    deactivate db
 
     alt کاربری یافت نشده است
-        entry_facade --> ui: userNotFound
+        entryFacade --> ui: userNotFound
         ui --> user: userNotFound
     else رمز عبور منطبق نیست
-        entry_facade --> ui: wrongPassword
+        entryFacade --> ui: wrongPassword
         ui --> user: wrongPassword
     else
         break
-            entry_facade --> ui: Success
-            deactivate entry_facade
+            entryFacade --> ui: Success
+            deactivate entryFacade
             ui --> user: Success
             deactivate ui
         end
