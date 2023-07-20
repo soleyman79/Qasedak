@@ -1,7 +1,7 @@
 @startuml see_content
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 

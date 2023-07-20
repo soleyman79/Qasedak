@@ -7,41 +7,48 @@ skinparam DefaultTextAlignment center
 
 
 actor ":کاربر" as user
-participant "کانال پیدا شده\n:کانال" as found_chanel
+box "«subsystem»\nGUI" #LightBlue
+participant ":JoinChanelFacade" as ui
+end box
+participant "کانال پیدا شده\n:کانال" as foundChanel
+box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
+participant ":EntryFacade" as entryFacade
+participant ":ContentFacade" as contentFacade
+end box
 participant ":کانال" as chanel
-participant "کانال‌ها" as chanels
-participant "کانال در حال بررسی\n:کانال" as current_chanel
-participant "عضو جدید\n:عضو کانال" as member
+participant ":ChanelsCatalog" as chanels
+participant "currentChanel\n:Chanel" as currentChanel
+participant "newMember\n:Member" as member
 
 
 activate user
-    user -> chanel : پیدا کردن کانال(اطلاعات کانال)
-deactivate user
+user -> ui: searchChanel(chanelInfo)
+activate ui
+ui -> contentFacade: searchChanel(chanelInfo)
 
 note left chanel
     این پیام به قسمت ارجاعی ارسال می‌شود
 end note
 
-ref over chanel, chanels, current_chanel : جستجوی کانال
+ref over chanel, chanels, currentChanel, contentFacade: جستجوی کانال
 
 note left chanel
     این پیام از قسمت ارجاعی ارسال می‌شود
 end note
 
-chanel --> user
+contentFacade --> ui
 
 activate user
-    user -> found_chanel : افزودن عضو(کاربر فعلی)
+user -> foundChanel : افزودن عضو(کاربر فعلی)
 deactivate user
 
-activate found_chanel
-    |||
-    found_chanel -> member ** : «create»
-    found_chanel -> user : افزودن عضویت(عضو جدید)
-deactivate found_chanel
+activate foundChanel
+|||
+foundChanel -> member ** : «create»
+foundChanel -> user : افزودن عضویت(عضو جدید)
+deactivate foundChanel
 
 activate user
-    |||
 deactivate user
 
 

@@ -1,7 +1,7 @@
 @startuml buy_subscription
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
@@ -14,12 +14,15 @@ box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
 participant ":ContentFacade" as contentFacade
 end box
 participant "member\n:Member" as memberObj
+participant "memberUser\n:User" as user
 box "«subsystem»\nزیرسیستم مالی" #Moccasin
 participant ":MonetaryFacade" as monetary
 end box
 participant "memberChanel\n:Chanel" as chanel
 participant "newSubscription\n:Subscription" as subscription
-participant "memberUser\n:User" as user
+box "«subsystem»\nپایگاه داده" #LightGrey
+participant ":DatabaseFacade" as db
+end box
 
 
 activate member
@@ -53,6 +56,10 @@ else else
     activate user
     deactivate user
     monetary -> subscription **: «create»
+    monetary -> db: save(newSubscription)
+    activate db
+    db --> monetary
+    deactivate db
     monetary -> memberObj: addSubscription\n(newSubscription)
     activate memberObj
     deactivate memberObj
