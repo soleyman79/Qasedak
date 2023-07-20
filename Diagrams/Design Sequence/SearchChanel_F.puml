@@ -1,12 +1,12 @@
 @startuml search_chanel_fragment
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
-box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightBlue
+box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
 participant ":ContentFacade" as contentFacade
 end box
 participant ":ChanelsCatalog" as chanels
