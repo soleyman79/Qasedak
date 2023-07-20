@@ -1,49 +1,55 @@
 @startuml update_subscription_time
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
 
 actor "زمان" as time
-participant "کاربران" as users
-participant "کاربر در حال بررسی:کاربر" as current_user
-participant "عضویت‌ها" as memberships
-participant ":عضو کانال" as current_member
-participant "قدیمی‌ترین اشتراک:اشتراک" as subscription
+box "«subsystem»\nزیرسیستم مالی" #LightBlue
+participant ":MonetaryFacade" as monetary
+end box
+box "«subsystem»\nزیرسیستم کاربری" #LightPink
+participant ":AccountFacade" as accountFacade
+end box
+participant "currentUser\n:User" as currentUser
+participant "currentMember\n:Member" as currentMember
+participant "oldestSubscription\n:Subscription" as subscription
+box "«subsystem»\nپایگاه داده" #Moccasin
+participant ":DatabaseFacade" as db
+end box
 
-
-note right users
-کاربران مجموعه همه کاربرهای سیستم است
-end note
-
-note right users
-عضویت‌ها مجموعه همه عضویت‌های کاربر در حال بررسی است
-end note
 
 activate time
+time -> monetary: updateSubscriptions()
+activate monetary
 loop به ازای هر کاربر در حال بررسی در کاربران
-    time -> current_user : به‌روزرسانی اشتراک‌ها()
-    activate current_user
+    monetary -> accountFacade: updateSubscriptions()
+    activate accountFacade
+    accountFacade -> currentUser: updateSubscriptions()
+    activate currentUser
     loop به ازای هر عضو کانال در عضویت‌ها
-        current_user -> current_member : کاهش روزانه()
-        activate current_member
-        current_member -> subscription : کاهش زمان باقیمانده()
+        currentUser -> currentMember: dailyDecrease()
+        activate currentMember
+        currentMember -> subscription: decreaseTime()
         activate subscription
+        subscription --> currentMember
         deactivate subscription
+        currentMember --> currentUser
+        deactivate currentMember
+        currentUser --> accountFacade
+        deactivate currentUser
         opt زمان باقیمانده قدیمی‌ترین اشتراک = 0
-            current_member -> subscription !! : «destory»
-            |||
+            accountFacade -> db: delete(oldestSubscription)
+            activate db
+            deactivate db
         end
-        deactivate current_member
-        |||
     end
-    |||
-    deactivate current_user
-    |||
+    accountFacade --> monetary
+    deactivate accountFacade
 end
-|||
+deactivate monetary
 deactivate time
 
 
