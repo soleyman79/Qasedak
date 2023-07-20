@@ -12,7 +12,6 @@ participant ":SignupFacade" as ui
 end box
 box "«subsystem»\nزیرسیستم کاربری" #LightPink
 participant ":EntryFacade" as entryFacade
-
 end box
 box "«subsystem»\nپایگاه داده" #Moccasin
 participant ":DatabaseFacade" as db
