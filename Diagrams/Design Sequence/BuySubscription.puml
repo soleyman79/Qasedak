@@ -15,12 +15,15 @@ participant ":ContentFacade" as contentFacade
 end box
 participant "member\n:Member" as memberObj
 participant "memberUser\n:User" as user
-box "«subsystem»\nزیرسیستم مالی" #Moccasin
+box "«subsystem»\nزیرسیستم کاربری" #LightGoldenRodYellow
+participant ":AccountFacade" as accountFacade
+end box
+box "«subsystem»\nزیرسیستم مالی" #LightGrey
 participant ":MonetaryFacade" as monetary
 end box
 participant "memberChanel\n:Chanel" as chanel
 participant "newSubscription\n:Subscription" as subscription
-box "«subsystem»\nپایگاه داده" #LightGrey
+box "«subsystem»\nپایگاه داده" #Moccasin
 participant ":DatabaseFacade" as db
 end box
 
@@ -41,9 +44,14 @@ ui --> member: subscriptions
 member -> ui: buySubscription\n(member, subscriptionType)
 ui -> monetary: buySubcription\n(member, subscriptionType)
 activate monetary
-monetary -> user: userCredit = getCredit()
+monetary -> accountFacade: userCredit\n = getCredit(member)
+activate accountFacade
+accountFacade -> user: getCredit()
 activate user
+user --> accountFacade
 deactivate user
+accountFacade --> monetary
+deactivate accountFacade
 
 alt اعتبار عضو کانال < قیمت اشتراک
     monetary --> ui: InsufficientCredit
@@ -52,9 +60,14 @@ else else
     monetary -> chanel: getFee(subscriptionType)
     activate chanel
     deactivate chanel
-    monetary -> user: decreaseCredit(subscriptionFee)
+    monetary -> accountFacade: decreaseCredit\n(member, subscriptionFee)
+    activate accountFacade
+    accountFacade -> user: decreaseCredit\n(subscriptionFee)
     activate user
+    user --> accountFacade
     deactivate user
+    accountFacade --> monetary
+    deactivate accountFacade
     monetary -> subscription **: «create»
     monetary -> db: save(newSubscription)
     activate db
