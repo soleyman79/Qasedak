@@ -1,7 +1,7 @@
 @startuml join_chanel
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
@@ -10,45 +10,62 @@ actor ":کاربر" as user
 box "«subsystem»\nGUI" #LightBlue
 participant ":JoinChanelFacade" as ui
 end box
-participant "کانال پیدا شده\n:کانال" as foundChanel
+participant "user\n:User" as userObj
+participant "foundChanel\n:Chanel" as foundChanel
 box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
 participant ":EntryFacade" as entryFacade
 participant ":ContentFacade" as contentFacade
 end box
-participant ":کانال" as chanel
 participant ":ChanelsCatalog" as chanels
 participant "currentChanel\n:Chanel" as currentChanel
 participant "newMember\n:Member" as member
+box "«subsystem»\nپایگاه داده" #Moccasin
+participant ":DatabaseFacade" as db
+end box
 
 
 activate user
-user -> ui: searchChanel(chanelInfo)
+user -> ui: searchChanel\n(chanelInfo)
 activate ui
 ui -> contentFacade: searchChanel(chanelInfo)
+activate contentFacade
 
-note left chanel
+note left contentFacade
     این پیام به قسمت ارجاعی ارسال می‌شود
 end note
-
-ref over chanel, chanels, currentChanel, contentFacade: جستجوی کانال
-
-note left chanel
+ref over chanels, currentChanel, contentFacade: جستجوی کانال
+note left contentFacade
     این پیام از قسمت ارجاعی ارسال می‌شود
 end note
 
-contentFacade --> ui
+contentFacade --> ui: foundChanel
+deactivate contentFacade
+ui --> user: foundChanel
 
-activate user
-user -> foundChanel : افزودن عضو(کاربر فعلی)
-deactivate user
-
+user -> ui: joinChanel\n(foundChanel)
+ui -> entryFacade: joinChanel(user, foundChanel)
+activate entryFacade
+entryFacade -> foundChanel: addMember(user)
+deactivate entryFacade
 activate foundChanel
-|||
-foundChanel -> member ** : «create»
-foundChanel -> user : افزودن عضویت(عضو جدید)
-deactivate foundChanel
 
-activate user
+foundChanel -> member **: «create»
+foundChanel --> entryFacade: newMember
+deactivate foundChanel
+activate entryFacade
+entryFacade -> db: save(newMember)
+activate db
+db --> entryFacade
+deactivate db
+
+entryFacade -> userObj: addMembership(newMember)
+activate userObj
+deactivate userObj
+
+entryFacade --> ui: Success
+deactivate entryFacade
+ui --> user: Success
+deactivate ui
 deactivate user
 
 
