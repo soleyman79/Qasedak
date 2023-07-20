@@ -6,33 +6,28 @@ skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
-participant ":کانال" as chanel
-participant "کانال‌ها" as chanels
-participant "کانال در حال بررسی:کانال" as current_chanel
+box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightBlue
+participant ":ContentFacade" as contentFacade
+end box
+participant ":ChanelsCatalog" as chanels
+participant "currentChanel\n:Chanel" as currenChanel
 
-note right of chanels
-    کانال‌ها مجموعه‌ای از
-    کانال‌های موجود است
-end note
 
-chanel <-] : پیدا کردن کانال(اطلاعات کانال)
-activate chanel
+contentFacade <-]: searchChanel(chanelInfo)
+activate contentFacade
 
 loop به ازای هر کانال در حال بررسی در کانال‌ها
-    chanel -> current_chanel : اطلاعات کانال در حال بررسی = گرفتن اطلاعات کانال()
-    
-    activate current_chanel
-    |||
-    current_chanel --> chanel
-    deactivate current_chanel
+    contentFacade -> currenChanel: currentChanelInfo = getInfo()
+    activate currenChanel
+    deactivate currenChanel
 
     break اطلاعات کانال در حال بررسی = اطلاعات کانال
-        chanel -->] : کانال در حال بررسی
+        contentFacade -->]: currentChanel
     end
 end
 
-chanel -->] : هیچ‌مقدار
-deactivate chanel
+contentFacade -->] : null
+deactivate contentFacade
 
 
 @enduml

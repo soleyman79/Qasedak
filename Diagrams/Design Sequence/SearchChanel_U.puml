@@ -7,28 +7,35 @@ skinparam DefaultTextAlignment center
 
 
 actor "کاربر:" as user
-participant ":کانال" as chanel
-participant "کانال‌ها" as chanels
-participant "کانال در حال بررسی:کانال" as current_chanel
+box "«subsystem»\nGUI" #LightBlue
+participant ":LoginFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
+participant ":ContentFacade" as contentFacade
+end box
+participant ":ChanelsCatalog" as chanels
+participant "currentChanel\n:Chanel" as currentChanel
 
 
 activate user
-user -> chanel : پیدا کردن کانال(اطلاعات کانال)
+user -> ui: searchChanel(chanelInfo)
 deactivate user
+activate ui
+ui -> contentFacade: searchChanel(chanelInfo)
 
-note left chanel
+note left contentFacade
 این پیام به قسمت ارجاعی ارسال می‌شود
 end note
 
-ref over chanel, chanels, current_chanel : جستجوی کانال
+ref over contentFacade, chanels, currentChanel: جستجوی کانال
 
-note left chanel
+note left contentFacade
 این پیام از قسمت ارجاعی ارسال می‌شود
 end note
 
-chanel --> user
-
-activate user
+contentFacade --> ui
+ui --> user
+deactivate ui
 deactivate user
 
 
