@@ -1,22 +1,47 @@
 @startuml create_content
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
  
 actor "//:تولیدکننده محتوا//" as producer
-participant ":کانال" as chanel
-participant "محتوای جدید:محتوا" as content
+box "«subsystem»\nGUI" #LightBlue
+participant ":CreateContentlFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم تولید محتوا" #LightPink
+participant ":ContentFacade" as contentFacade
+end box
+participant "correspondingChnel\n:Chanel" as chanel
+participant "newContent\n:Content" as content
+box "«subsystem»\nپایگاه داده" #Moccasin
+participant ":DatabaseFacade" as db
+end box
+
 
 activate producer
-producer -> chanel : ایجاد محتوا(مشخصات محتوا)
-deactivate producer
+producer -> ui: createContent\n(producer, contentInfo)
+activate ui
+ui -> contentFacade: createContent\n(producer, contentInfo)
+activate contentFacade
+contentFacade -> chanel: createContent(contentInfo)
 activate chanel
-chanel -> content ** : «create»
-chanel -> chanel : انتشار محتوا(محتوای جدید)
+chanel -> content **: «create»
+chanel -> chanel : publich\n(newContent)
 activate chanel
 deactivate chanel
+chanel --> contentFacade
+deactivate chanel
+contentFacade -> db: save(newContent)
+activate db
+db --> contentFacade
+deactivate db
+contentFacade --> ui
+deactivate contentFacade
+ui --> producer
+deactivate ui
+deactivate producer
+
 
 @enduml
