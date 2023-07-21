@@ -7,48 +7,76 @@ skinparam DefaultTextAlignment center
 
  
 actor ":کاربر" as user
-participant "کانال‌ها" as chanels
-participant "کانال در حال بررسی\n:کانال" as current_chanel
-participant "کانال جدید\n:کانال" as new_chanel
-participant "اولین عضو\n:عضو کانال" as first_member
-participant ":صاحب کانال" as owner
+box "«subsystem»\nGUI" #LightBlue
+participant ":SignupFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم تولید محتوا" #LightPink
+participant ":CreateFacade" as createFacade
+end box
+participant ":ChanelsCatalog" as chanels
+participant "currentChanel\n:Chanel" as currentChanel
+box "«subsystem»\nزیرسیستم کاربری" #LightGray
+participant ":AccountFacade" as accountFacade
+end box
+participant "user\n:User" as userObj
+participant "newChanel\n:Chanel" as newChanel
+participant "firstMember\n:Member" as firstMember
+participant "owner\n:Owner" as owner
+box "«subsystem»\nپایگاه داده" #Moccasin
+participant ":DatabaseFacade" as db
+end box
 
 
-note left chanels
-کانال‌ها مجموعه همه
-کانال‌های سیستم است
-end note
-
-note right user
-اطلاعات کانال شامل
-نام کانال نیز هست
-end note
-
-user -> user : درخواست ایجاد کانال(اطلاعات کانال)
 activate user
+user -> ui: createChanel\n(chanelInfo)
+activate ui
+ui -> createFacade: createChanel\n(chanelInfo)
+activate createFacade
 loop به ازای هر کانال در حال بررسی در کانال‌ها
-    user -> current_chanel : نام کانال در حال بررسی = گرفتن نام کانال()
-    activate current_chanel
-    |||
+    createFacade -> currentChanel: getName()
+    activate currentChanel
+    currentChanel --> createFacade: currentChanelName
+    deactivate currentChanel
     break نام کانال = نام کانال در حال بررسی
-        current_chanel --> user : خطای نام تکراری
-        |||
-        deactivate current_chanel
+        createFacade --> ui: DuplicateName
+        ui --> user: DuplicateName
     end
 else else
-    user -> new_chanel ** : «create»
-    activate new_chanel
-    new_chanel -> first_member ** : «create»
-    new_chanel -> owner ** : «create»
-    new_chanel -> first_member : ارتقا به تولیدکننده(صاحب کانال)
-    activate first_member
-    deactivate first_member
-    new_chanel -> user : افزودن عضویت(اولین عضو)
-    activate user
-    deactivate user
+    createFacade -> newChanel **: «create»
+    activate newChanel
+    newChanel -> firstMember ** : «create»
+    newChanel -> owner ** : «create»
+    newChanel -> firstMember : promoteMember\n(owner)
+    activate firstMember
+    firstMember --> newChanel
+    deactivate firstMember
+    newChanel --> createFacade
+    deactivate newChanel
+
+    createFacade -> db: save(newChanel)
+    activate db
+    deactivate db
+    createFacade -> db: save(firstMember)
+    activate db
+    deactivate db
+    createFacade -> db: save(owner)
+    activate db
+    deactivate db
+
+    createFacade -> accountFacade: addMembership(newMember)
+    activate accountFacade
+    accountFacade -> userObj: addMembership\n(newMember)
+    activate userObj
+    userObj --> accountFacade
+    deactivate userObj
+    accountFacade --> createFacade
+    deactivate accountFacade
+    createFacade --> ui
+    deactivate createFacade
+    ui --> user
+    deactivate ui
 end
-|||
-deactivate
+deactivate user
 
 
 @enduml
