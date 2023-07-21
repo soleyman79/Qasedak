@@ -1,43 +1,67 @@
 @startuml promote_content
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
 
 actor "//:تولیدکننده محتوا//" as producer
-participant "محتویات" as contents
-participant ":کانال" as chanel
-participant "محتوای در حال بررسی:محتوا" as current_content
+box "«subsystem»\nGUI" #LightBlue
+participant ":PromoteContentFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
+participant ":ContentFacade" as seeContentFacade
+end box
+box "«subsystem»\nزیرسیستم تولید محتوا" #Moccasin
+participant ":ContentFacade" as proContentFacade
+end box
+participant "chanelContens\n:ContensCatalog" as contents
+participant ":Chanel" as chanel
+participant "currentContent\n:Content" as currentContent
 
-note right chanel
-محتویات مجموعه همه
-محتواهای کانال است
-end note
 
 activate producer
-producer -> chanel : مشاهده محتویات()
+producer -> ui: getContents\n(producer)
+activate ui
+ui -> seeContentFacade: getContents\n(producer)
+activate seeContentFacade
+seeContentFacade -> chanel: getContents()
 activate chanel
+chanel --> seeContentFacade: chanelContents
 deactivate chanel
+seeContentFacade --> ui: chanelContents
+deactivate seeContentFacade
+ui --> producer
 
-producer -> chanel : انتخاب محتوا(مشخصات محتوا)
+
+producer -> ui: promoteContents\n(producer, contentInfo)
+ui -> proContentFacade: promoteContents(producer, contentsInfo)
+activate proContentFacade
+proContentFacade -> chanel: promoteContent(contentInfo)
+
 activate chanel
 
 loop به ازای هر محتوای در حال بررسی در محتویات
-    chanel -> current_content : مشخصات محتوای در حال بررسی \n = گرفتن مشخصات()
-    activate current_content
-    deactivate current_content
+    chanel -> currentContent: getInfo()
+    activate currentContent
+    currentContent --> chanel: currentContentInfo
+    deactivate currentContent
     
     break مشخصات محتوا = مشخصات محتوای در حال بررسی
-        chanel -> current_content : ارتقای سطح دسترسی()
-        activate current_content
-        deactivate current_content
+        chanel -> currentContent: promot()
+        activate currentContent
+        currentContent --> chanel
+        deactivate currentContent
     end
 end
 
-|||
+chanel --> proContentFacade
 deactivate chanel
+proContentFacade --> ui
+deactivate proContentFacade
+ui --> producer
+deactivate ui
 deactivate producer
 
 
