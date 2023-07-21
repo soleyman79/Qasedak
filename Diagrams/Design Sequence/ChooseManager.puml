@@ -35,6 +35,10 @@ member --> chanel
 deactivate member
 chanel --> chanelFacade
 deactivate chanel
+chanelFacade -> db:\ save(newManager)
+activate db
+db --> chanelFacade
+deactivate db
 chanelFacade --> ui
 deactivate chanelFacade
 ui --> owner
