@@ -11,7 +11,7 @@ box "«subsystem»\nGUI" #LightBlue
 participant ":SignupFacade" as ui
 end box
 box "«subsystem»\nزیرسیستم تولید محتوا" #LightPink
-participant ":CreateFacade" as createFacade
+participant ":ChanelFacade" as chanelFacade
 end box
 participant ":ChanelsCatalog" as chanels
 participant "currentChanel\n:Chanel" as currentChanel
@@ -30,19 +30,19 @@ end box
 activate user
 user -> ui: createChanel\n(chanelInfo)
 activate ui
-ui -> createFacade: createChanel\n(chanelInfo)
-activate createFacade
+ui -> chanelFacade: createChanel\n(chanelInfo)
+activate chanelFacade
 loop به ازای هر کانال در حال بررسی در کانال‌ها
-    createFacade -> currentChanel: getName()
+    chanelFacade -> currentChanel: getName()
     activate currentChanel
-    currentChanel --> createFacade: currentChanelName
+    currentChanel --> chanelFacade: currentChanelName
     deactivate currentChanel
     break نام کانال = نام کانال در حال بررسی
-        createFacade --> ui: DuplicateName
+        chanelFacade --> ui: DuplicateName
         ui --> user: DuplicateName
     end
 else else
-    createFacade -> newChanel **: «create»
+    chanelFacade -> newChanel **: «create»
     activate newChanel
     newChanel -> firstMember ** : «create»
     newChanel -> owner ** : «create»
@@ -50,29 +50,29 @@ else else
     activate firstMember
     firstMember --> newChanel
     deactivate firstMember
-    newChanel --> createFacade
+    newChanel --> chanelFacade
     deactivate newChanel
 
-    createFacade -> db: save(newChanel)
+    chanelFacade -> db: save(newChanel)
     activate db
     deactivate db
-    createFacade -> db: save(firstMember)
+    chanelFacade -> db: save(firstMember)
     activate db
     deactivate db
-    createFacade -> db: save(owner)
+    chanelFacade -> db: save(owner)
     activate db
     deactivate db
 
-    createFacade -> accountFacade: addMembership(newMember)
+    chanelFacade -> accountFacade: addMembership(newMember)
     activate accountFacade
     accountFacade -> userObj: addMembership\n(newMember)
     activate userObj
     userObj --> accountFacade
     deactivate userObj
-    accountFacade --> createFacade
+    accountFacade --> chanelFacade
     deactivate accountFacade
-    createFacade --> ui
-    deactivate createFacade
+    chanelFacade --> ui
+    deactivate chanelFacade
     ui --> user
     deactivate ui
 end
