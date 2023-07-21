@@ -1,26 +1,60 @@
 @startuml leave_chanel
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
 
-actor ":کاربر" as user
-participant ":عضو کانال" as member
-participant ":کانال" as chanel
+actor ":عضو کانال" as member
+box "«subsystem»\nGUI" #LightBlue
+participant "LeaveChanelFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم مشاهده محتوا" #LightPink
+participant ":ContentFacade" as contentFacade
+end box
+box "«subsystem»\nزیرسیستم کاربری" #LightGray
+participant ":AccountFacadeFacade" as accountFacade
+end box
+participant "user\n:User" as user
+participant "member\n:Member" as memberObj
+participant ":Chanel" as chanel
+box "«subsystem»\nپایگاه داده" #Moccasin
+participant ":DatabaseFacade" as db
+end box
 
-activate user
-user -> member : خروج()
 activate member
-member -> chanel : حذف عضو(عضو کانال)
-deactivate member
+member -> ui: leaveChanel\n(member)
+activate ui
+ui -> contentFacade: leaveChanel\n(member)
+activate contentFacade
+contentFacade -> memberObj: leave()
+
+activate memberObj
+memberObj -> chanel: removeMember\n(member)
 activate chanel
-chanel -> user : حذف عضویت(عضو کانال)
-activate user
-deactivate user
-chanel -> member !! : «destory»
-deactivate user
+chanel --> memberObj
 deactivate chanel
+memberObj --> contentFacade
+deactivate memberObj
+
+contentFacade -> accountFacade: removeMembership\n(member)
+activate accountFacade
+accountFacade -> user: removeMembership\n(member)
+activate user
+user --> accountFacade
+deactivate user
+accountFacade -> db: delete(member)
+activate db
+db --> accountFacade
+deactivate db
+accountFacade --> contentFacade
+deactivate accountFacade
+contentFacade --> ui
+deactivate contentFacade
+ui --> member
+deactivate ui
+deactivate member
+
 
 @enduml
