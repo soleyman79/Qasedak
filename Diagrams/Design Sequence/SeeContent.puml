@@ -27,9 +27,9 @@ ui -> contentFacade: getContents(member)
 activate contentFacade
 contentFacade -> chanel: getContents()
 activate chanel
-chanel --> contentFacade: contentsCatalog
+chanel --> contentFacade: chanelContents
 deactivate chanel
-contentFacade --> ui: cotents
+contentFacade --> ui: chanelContents
 deactivate contentFacade
 ui --> member
 
