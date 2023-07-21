@@ -8,7 +8,7 @@ skinparam DefaultTextAlignment center
  
 actor ":کاربر" as user
 box "«subsystem»\nGUI" #LightBlue
-participant ":SignupFacade" as ui
+participant ":CreateChanelFacade" as ui
 end box
 box "«subsystem»\nزیرسیستم تولید محتوا" #LightPink
 participant ":ChanelFacade" as chanelFacade
