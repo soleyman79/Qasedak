@@ -1,22 +1,41 @@
 @startuml set_subscription_price
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
 actor ":صاحب کانال" as owner
-participant ":کانال" as chanel
+box "«subsystem»\nGUI" #LightBlue
+participant ":setPriceFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم تولید محتوا" #LightPink
+participant ":ChanelFacade" as chanelFacade
+end box
+participant "ownerChanel\n:Chanel" as chanel
+
 
 activate owner
-owner -> chanel : تعریف حق عضویت()
+owner -> ui: setPrice(owner)
+activate ui
+ui -> chanelFacade: setPrice(owner)
+activate chanelFacade
+chanelFacade -> chanel: setPrice()
 activate chanel
 loop به ازای هر نوع اشتراک در اشتراک‌های کانال
-    owner -> chanel : قیمت‌گذاری(نوع اشتراک)
+    owner -> ui: setSubscriptionPrice\n(type, price)
+    ui -> chanelFacade: setSubscriptionPrice\n(type, price)
+    chanelFacade -> chanel: setSubscriptionPrice\n(type, price)
     activate chanel
     deactivate chanel
+    chanel --> chanelFacade
+    deactivate chanel
 end
-chanel --> owner
-deactivate chanel
+chanelFacade --> ui
+deactivate chanelFacade
+ui --> owner
+deactivate ui
+deactivate owner
+
 
 @enduml
