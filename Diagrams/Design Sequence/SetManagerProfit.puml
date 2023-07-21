@@ -1,33 +1,43 @@
 @startuml set_manager_profit
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
 
 actor ":صاحب کانال" as owner
-participant ":کانال" as chanel
-participant "عضو متناظر با مدیر\n:عضو کانال" as member
-participant ":مدیر کانال" as manager
+box "«subsystem»\nGUI" #LightBlue
+participant ":setManagerFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم تولید محتوا" #LightPink
+participant ":ChanelFacade" as chanelFacade
+end box
+participant ":Chanel" as chanel
+participant "member\n:Member" as member
+participant "manager\n:Manager" as manager
 
 activate owner
-owner -> chanel : تعیین سود مدیر\n(عضو متناظر با مدیر، مقدار سود)
+owner -> ui: setManagerProfit\n(owner, member, profit)
+activate ui
+ui -> chanelFacade: setManagerProfit\n(owner, member, profit)
+activate chanelFacade
+chanelFacade -> chanel: setManagerProfit\n(member, profit)
 activate chanel
-chanel -> member : تعیین سود(مقدار سود)
+chanel -> member: setProfit(profit)
 activate member
-member -> manager : تعیین سود(مقدار سود)
-|||
+member -> manager: setProfit(profit)
 activate manager
 manager --> member
-|||
 deactivate manager
 member --> chanel
-|||
 deactivate member
-chanel --> owner
-|||
+chanel --> chanelFacade
 deactivate chanel
+chanelFacade --> ui
+deactivate chanelFacade
+ui --> owner
+deactivate ui
 deactivate owner
 
 
