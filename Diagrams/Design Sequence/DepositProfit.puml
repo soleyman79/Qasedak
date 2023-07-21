@@ -7,52 +7,59 @@ skinparam DefaultTextAlignment center
 
 
 actor "زمان" as time
-participant "کانال‌ها" as chanels
-participant "کانال در حال بررسی\n:کانال" as current_chanel
-participant "عضو در حال بررسی\n:عضو کانال" as member
-participant "//تولیدکننده محتوا متناظر با عضو کانال//\n//:تولیدکننده محتوا//" as producer
-participant "کاربر متناظر با عضو کانال\n:کاربر" as user
-
-note right chanels
-کانال‌ها مجموعه همه کانال‌های سیستم است
-end note
+box "«subsystem»\nزیرسیستم مالی" #LightBlue
+participant ":MonetaryFacade" as monetary
+end box
+box "«subsystem»\nزیرسیستم تولید محتوا" #LightPink
+participant ":ChanelFacade" as chanelFacade
+end box
+participant ":ChanelsCatalog" as chanels
+participant "currentChanel\n:Chanel" as currentChanel
+participant "currentMember\n:Member" as member
+participant "//correspondingProducer//\n//:producer//" as producer
+box "«subsystem»\nزیرسیستم کاربری" #Moccasin
+participant ":AccountFacade" as accountFacade
+end box
+participant "correspondingUser\n:User" as user
 
 activate time
+time -> monetary: deposit()
+activate monetary
+monetary -> chanelFacade: deposit()
+activate chanelFacade
 loop به ازای هر کانال در حال بررسی در کانال‌ها
-    time -> current_chanel : واریز سود()
-    activate current_chanel
-    current_chanel -> current_chanel : سود کل = محاسبه سود کل()
-    activate current_chanel
-    deactivate current_chanel
+    chanelFacade -> currentChanel: deposit()
+    activate currentChanel
+    currentChanel -> currentChanel : totalProfit =\ncalculateProfit()
+    activate currentChanel
+    deactivate currentChanel
     loop به ازای هر عضو در حال بررسی در اعضای کانال
         opt عضو قابلیت تولید محتوا دارد
-            current_chanel -> member : درصد = گرفتن درصد سود()
+            currentChanel -> member: getShare()
             activate member
+            member --> currentChanel: share
             deactivate member
-            current_chanel -> member : واریز سود(درصد * سود کل) 
-            activate member
-            member -> producer : واریز سود(درصد * سود کل) 
-            activate producer
-            producer -> user : واریز سود(درصد * سود کل) 
+            currentChanel -> chanelFacade: deposit\n(currentMember, share * totalProfit)
+            deactivate currentChanel
+
+            chanelFacade -> accountFacade: deposit(currentMember, share * totalProfit)
+            activate accountFacade
+            accountFacade -> user: deposit\n(share * totalProfit)
             activate user
-            |||
-            user --> producer
+            user --> accountFacade
             deactivate user
-            |||
-            producer --> member
-            deactivate producer
-            |||
-            member --> current_chanel
-            deactivate member
-            |||
-            deactivate current_chanel
+            accountFacade --> chanelFacade
+            deactivate accountFacade
         end
     end
-    time -> current_chanel : ثبت گزارش واریز()
-    activate current_chanel
-    deactivate current_chanel
+    chanelFacade -> currentChanel: report()
+    activate currentChanel
+    currentChanel --> chanelFacade
+    deactivate currentChanel
 end
-|||
+chanelFacade --> monetary
+deactivate chanelFacade
+deactivate monetary
 deactivate time
 
 
