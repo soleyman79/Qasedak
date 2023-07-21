@@ -1,25 +1,44 @@
 @startuml choose_manager
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
 
 actor ":صاحب کانال" as owner
-participant ":کانال" as chanel
-participant "عضو منتخب\n:عضو کانال" as member
-participant "مدیر جدید\n:مدیر کانال" as manager
+box "«subsystem»\nGUI" #LightBlue
+participant ":setManagerFacade" as ui
+end box
+box "«subsystem»\nزیرسیستم تولید محتوا" #LightPink
+participant ":ChanelFacade" as chanelFacade
+end box
+participant "ownerChanel\n:Chanel" as chanel
+participant "choosenMember\n:Member" as member
+participant "newManager\n:Manager" as manager
+box "«subsystem»\nپایگاه داده" #Moccasin
+participant ":DatabaseFacade" as db
+end box
+
 
 activate owner
-owner -> chanel : انتخاب مدیر(عضو متنخب)
+owner -> ui: setManager\n(owner, choosenMember)
+activate ui
+ui -> chanelFacade: setManager\n(owner, choosenMember)
+activate chanelFacade
+chanelFacade -> chanel: setManager\n(choosenMember)
 activate chanel
-chanel -> manager ** : «create»
-chanel -> member : ارتقا به تولیدکننده(مدیر جدید)
-deactivate chanel
+chanel -> manager **: «create»
+chanel -> member: promote\n(newManager)
 activate member
+member --> chanel
 deactivate member
-|||
+chanel --> chanelFacade
+deactivate chanel
+chanelFacade --> ui
+deactivate chanelFacade
+ui --> owner
+deactivate ui
 
 
 @enduml
