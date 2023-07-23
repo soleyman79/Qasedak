@@ -4,25 +4,57 @@ scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
-class "کاربر" as user {
-    درخواست ایجاد کانال(اطلاعات کانال)
-    افزودن عضویت(عضو کانال)
+class "User" as user {
+    addMembership(newMembership)
 }
 
-class "کانال" as chanel {
-    گرفتن نام کانال()
+class "Channel" as chanel {
+    getName()
+    Channel()
 }
 
-class "عضو کانال" as member {
-    ارتقا به تولیدکننده(تولیدکننده محتوا)
+class "Member" as member {
+    Member()
+    promoteMember(owner)
 }
 
-class "صاحب کانال" as owner {
+class "Owner" as owner {
+    Owner()
+}
+
+class CreateChannelFacade {
+    createChannel(channelInfo)
+}
+
+class ChannelFacade {
+    createChannel(channelInfo)
+}
+
+class AccountFacade {
+    addMembership(newMember)
+}
+
+class DatabaseFacade {
+    save(newChannel)
+    save(firstMember)
+    save(owner)
+}
+
+class ChannelsCatalog {
+    getAllChannels()
 }
 
 user "          1" -- "*" chanel
 chanel "        1" o-- "            +" member
 member "1" -- "0..1" owner
 user "1" -- "*" member
+ChannelsCatalog "1" -- "*" Channel
+CreateChannelFacade ..> ChannelFacade :use
+ChannelFacade ..> ChannelsCatalog :use
+ChannelFacade ..> Channel :use, instantiate
+ChannelFacade ..> DatabaseFacade :use
+ChannelFacade ..> AccountFacade :use
+AccountFacade ..> user :use
+
 
 @enduml
