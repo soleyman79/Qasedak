@@ -5,19 +5,43 @@ scale 3
 skinparam DefaultFontName B Nazanin
 
 
-class "کاربر" as user {
-    افزودن عضویت(عضو کانال)
+class "User" as user {
+    addMembership(newMember)
 }
 
-class "کانال" as chanel {
-    افزودن عضو(کاربر)
+class "Chanel" as chanel {
+    addMember(user)
 }
 
-class "عضو کانال" as member {
+class "Member" as member {
+    Member()
 }
 
-user "*" -- "*" chanel
+class EntryFacade {
+    joinChannel(user, foundChannel)
+}
+
+class JoinChannelFacade {
+    searchChannel(channelInfo)
+    joinChanel(channelInfo)
+}
+
+class ContentFacade {
+    searchChannel()
+}
+
+class DatabaseFacade {
+    save(newMember)
+}
+
 chanel "1" o-left- "+" member
+user "*" -- "*" chanel
+JoinChannelFacade ..> ContentFacade :use
+JoinChannelFacade ..> EntryFacade :use
+EntryFacade ..> chanel :use
+EntryFacade ..> DatabaseFacade :use
+EntryFacade ..> user :use
+
 
 
 @enduml
