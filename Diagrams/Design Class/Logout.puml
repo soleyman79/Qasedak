@@ -4,8 +4,14 @@ scale 3
 skinparam DefaultFontName B Nazanin
 
 
-class "کاربر" as user {
-    خروج()
+class LogoutFacade {
+    requestLogout()
 }
+
+class EntryFacade {
+    logout(user)
+}
+
+LogoutFacade ..> EntryFacade :use
 
 @enduml
