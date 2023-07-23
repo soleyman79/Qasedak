@@ -1,61 +1,42 @@
-@startuml create_chanel
+@startuml choose_manager
+
 
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 skinparam classAttributeIconSize 0
 
-class "User" as user {
-    +void addMembership(Member newMember)
-}
 
-class "Channel" as chanel {
-    +string getName()
-    Channel()
+class "Chanel" as chanel {
+    +void setManager(Member choosenMember)
 }
 
 class "Member" as member {
-    Member()
-    +void promoteMember(Owner owner)
+    +void promote(Manager newManager)
 }
 
-class "Owner" as owner {
-    Owner()
+class "Manager" as manager {
+    Manager()
 }
 
-class CreateChannelFacade {
-    +void createChannel(string channelInfo)
+class setManagerFacade {
+    +void setManager(Owner owner, Member choosenMember)
 }
 
 class ChannelFacade {
-    +void createChannel(string channelInfo)
+    +void setManager(Owner owner, Member choosenMember)
 }
 
-class AccountFacade {
-    +void addMembership(Member newMember)
+
+class "DatabaseFacade" {
+    +void save(Manager newManager)
 }
 
-class DatabaseFacade {
-    +void save(Channel newChannel)
-    +void save(Member firstMember)
-    +void save(Owner owner)
-}
-
-class ChannelsCatalog {
-    +List<Channels> getAllChannels()
-}
-
-user "          1" -- "*" chanel
-chanel "        1" o-- "            +" member
-member "1" -- "0..1" owner
-user "1" -- "*" member
-ChannelsCatalog "1" -- "*" Channel
-CreateChannelFacade ..> ChannelFacade :use
-ChannelFacade ..> ChannelsCatalog :use
-ChannelFacade ..> Channel :use, instantiate
+chanel "            1" o-- "            +" member
+member "        1" -- "          0..1" manager
+chanel "1" -- "*" manager
+setManagerFacade ..> ChannelFacade :use
+ChannelFacade ..> chanel :use
 ChannelFacade ..> DatabaseFacade :use
-ChannelFacade ..> AccountFacade :use
-AccountFacade ..> user :use
-
 
 @enduml

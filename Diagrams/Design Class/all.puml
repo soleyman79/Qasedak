@@ -1,0 +1,491 @@
+@startuml buy_subscription
+
+scale 3
+skinparam DefaultFontName B Nazanin
+skinparam ArrowMessageAlignment right
+skinparam classAttributeIconSize 0
+
+
+class "Subscription" as subscription {
+    Subscription()
+}
+
+class "Chanel" as chanel {
+    +List<Subscription> getSubscription()
+    +double getFee(string subscriptionType)
+}
+
+class "Member" as member {
+    +void addSubscription(Subscription newSubscription)
+}
+
+class "User" as user {
+    +Double getCredit()
+    +void decreaseCredit(double subscriptionFee)
+}
+
+class "ContentFacade" {
+    +List<Subscription> seeSubscription(Member member)
+}
+
+class "AccountFacade" {
+    +double getCredit(Member member)
+    +void decreaseCredit(Member member, double subscriptionFee)
+}
+
+class "MonetaryFacade" {
+    +void buySubscription(Member member, string subscriptionType)
+}
+
+class "DatabaseFacade" {
+    +void save(Subscription newSubscription)
+}
+
+class "SubscriptionFacade" {
+    +void seeSubscription(Member member)
+    +void buySubscription(Member member, string subscriptionType)
+}
+
+class "Chanel" as chanel {
+    +void setManager(Member choosenMember)
+}
+
+class "Member" as member {
+    +void promote(Manager newManager)
+}
+
+class "Manager" as manager {
+    Manager()
+}
+
+class setManagerFacade {
+    +void setManager(Owner owner, Member choosenMember)
+}
+
+class ChannelFacade {
+    +void setManager(Owner owner, Member choosenMember)
+}
+
+
+class "DatabaseFacade" {
+    +void save(Manager newManager)
+}
+
+class "Chanel" as chanel {
+    +void setManager(Member choosenMember)
+}
+
+class "Member" as member {
+    +void promote(Manager newManager)
+}
+
+class "Manager" as manager {
+    Manager()
+}
+
+class setManagerFacade {
+    +void setManager(Owner owner, Member choosenMember)
+}
+
+class ChannelFacade {
+    +void setManager(Owner owner, Member choosenMember)
+}
+
+
+class "DatabaseFacade" {
+    +void save(Manager newManager)
+}
+
+class "Content" as content {
+    Content()
+}
+
+class "Channel" as chanel {
+    +void createContent(string contentInfo)
+    -void publish(Content newContent)
+}
+
+class CreateContentFacade {
+    +void createContent(Producer producer, string contentInfo)
+}
+
+class ContentFacade {
+    +void createContent(string contentInfo)
+}
+
+class DatabaseFacade {
+    +void save(Content newContent)
+}
+
+class "Channel" as chanel {
+    -double totalProfit
+    +void deposit()
+    -double calculateProfit()
+    +void report()
+
+}
+
+class "User" as user {
+    +void deposit(double share * totalProfit)
+}
+
+class "Member" as member {
+    +double getShare()
+}
+
+class MonetaryFacade {
+    +void deposit()
+}
+
+class ChannelFacade {
+    +void deposit()
+    +void deposit(Member currentMember, double share * totalProfit)
+}
+
+class ChannelsCatalog {
+    +List<Channel> getAllChannels()
+}
+
+class AccountFacade {
+    +void deposit(Member currentMember, double share * totalProfit)
+}
+
+class "User" as user {
+    +void addMembership(Member newMember)
+}
+
+class "Chanel" as chanel {
+    +Member addMember(User user)
+}
+
+class "Member" as member {
+    Member()
+}
+
+class EntryFacade {
+    +void joinChannel(User user, Channel foundChannel)
+}
+
+class JoinChannelFacade {
+    +Channel searchChannel(string channelInfo)
+    +void joinChanel(string channelInfo)
+}
+
+class ContentFacade {
+    +Channel searchChannel()
+}
+
+class DatabaseFacade {
+    +void save(Member newMember)
+}
+
+class "Chanel" as chanel {
+    +void removeMember(Member member)
+}
+
+class "member" as member {
+    +void leave()
+}
+
+class "User" as user {
+    +void removeMembership(Member member)
+}
+
+class LeaveChanelFacade {
+    +void leaveChanel(Member member)
+}
+
+class ContentFacade {
+    +void leaveChanel(Member member)
+}
+
+class AccountFacade {
+    +void removeMembership(Member member)
+}
+
+class DatabaseFacade {
+    +void delete(Member member)
+}
+
+class LoginFacade {
+    +void requestLogin()
+    +void login(string username, string password)
+}
+
+class EntryFacade {
+    +void login(string username, string password)
+}
+
+class DatabaseFacade {
+    +User getUser(string username)
+}
+
+class LogoutFacade {
+    +void requestLogout()
+}
+
+class EntryFacade {
+    +void logout(User user)
+}
+
+class "Chanel" as chanel {
+    +List<Content> getContents()
+    +void promoteContent(string contentInfo)
+}
+
+class Content {
+    -string info
+    +string getInfo()
+    +void promote()
+}
+
+class PromoteContentFacade {
+    +List<Content> getContents(Producer producer)
+    +void promoteContents(Producer producer, string contentsInfo)
+}
+
+class ViewContentFacade {
+    +List<Contents> getContents(Producer producer)
+}
+
+class ProduceContentFacade {
+    +void promoteContents(Producer producer, string contentsInfo)
+}
+
+class ContentsCatalog {
+    +List<Contents> getChannelsContent()
+}
+
+class "Chanel" as chanel {
+    +string getInfo()
+}
+
+class SearchFacade {
+    +Channel searchChanel(string chanelInfo)
+}
+
+class ContentFacade {
+    +Channel searchChanel(string chanelInfo)
+}
+
+class ChannelsCatalog {
+    +List<Channel> getAllChannels()
+}
+
+class "Content" as content {
+    -string info
+    +string getInfo()
+    +string getAccessLevel()
+    +strimg getSummary()
+}
+
+class "Chanel" as chanel {
+    +List<Content> getContents()
+    +Content selectContent(string contentInfo)
+}
+
+class "Member" as member {
+    +string getAccessLevel()
+}
+
+class UIContentFacade {
+    +List<Content> getContents(Member member)
+    +Content selectContent(Member member, string contentInfo)
+}
+
+class ViewContentFacade {
+    +List<Content> getContents(Member member)
+    +Content selectContent(Member member, string contentInfo)
+}
+
+class ContentsCatalog {
+    +List<Content> getChannelContents()
+}
+
+class "Channel" as chanel {
+    +void setManagerProfit(Member member, double profit)
+}
+
+class "Member" as member {
+    +void setProfit(double profit)
+}
+
+class "Manager" as manager {
+    -double profit
+    +void setProfit(double profit)
+}
+
+class SetManagerFacade {
+    +void setManagerProfit(Owner owner, Member member, double profit)
+}
+
+class ChannelFacade {
+    +void setManagerProfit(Owner owner, Member member, double profit)
+}
+
+class "Channel" as chanel {
+    +void setPrice(double owner)
+    +void setSubscriptionPrice(string type, double price)
+}
+
+class SetPriceFacade {
+    +void setPrice(Owner owner)
+    +void setSubscriptionPrice(string type, double price)
+}
+
+class ChannelFacade {
+    +void setPrice(Owner owner)
+    +void setSubscriptionPrice(string type, double price)
+}
+
+class Email {
+    Email()
+    -string emailAddress
+}
+
+class Phone {
+    -string phoneNumber
+    Phone()
+}
+
+class User{
+    -string username
+    -string password
+    User()
+}
+
+class SignupFacade {
+    +void requestSignup()
+    +void signup(string username, string password)
+}
+
+class EntryFacade {
+    +void signup(string username, string password)
+}
+
+class DatabaseFacade {
+    +boolean exists(string username)
+    +void save(string email)
+    +void save(string phone)
+    +void save(User user)
+}
+
+class User {
+    +void updateSubscriptions()
+}
+
+class Member {
+    +void dailyDecrease()
+}
+
+class Subscription {
+    -int remainingTime
+    +void decreaseTime()
+    }
+
+class MonetaryFacade {
+    +void updateSubscriptions()
+}
+
+class AccountFacade {
+    +void updateSubscriptions()
+}
+
+class DatabaseFacade {
+    +void delete(Subscription oldestSubscription)
+}
+
+
+member "1" *-- "*" subscription
+user "1" -- "*" member
+AccountFacade ..> User :use
+AccountFacade ..> DatabaseFacade :use
+MonetaryFacade ..> AccountFacade :use
+potential_user "1" -left- "1" Email
+potential_user "1" -right- "1" Phone
+potential_user "1" -down- "1" User
+EntryFacade ..> DatabaseFacade :use
+EntryFacade ..> Email :use
+EntryFacade ..> Phone :use
+EntryFacade ..> User :use
+SignupFacade ..> EntryFacade :use
+ChannelFacade ..> chanel :use
+SetPriceFacade ..> ChannelFacade :use
+owner "1" -- "1" chanel
+chanel "1" o-- "+" member
+member "1" -- "0..1" manager
+SetManagerFacade ..> ChannelFacade :use
+ChannelFacade ..> chanel :use
+content "*" --o "1" chanel
+chanel "1" o-left- "+" member
+subscription "*" --* "1" member
+chanel "1" -- "1" ContentsCatalog
+UIContentFacade ..> ViewContentFacade :use
+ViewContentFacade ..> chanel :use
+ChannelsCatalog "1" -- "*" chanel
+ContentFacade ..> ChannelsCatalog :use
+ContentFacade ..> chanel :use
+SearchFacade ..> ContentFacade :use
+Content "           *" -- "1" chanel
+producer "+" -- "                   1" chanel
+PromoteContentFacade ..> ViewContentFacade :use
+PromoteContentFacade ..> ProduceContentFacade :use
+ViewContentFacade ..> chanel :use
+ProduceContentFacade ..> chanel :use
+LogoutFacade ..> EntryFacade :use
+LoginFacade ..> EntryFacade :use
+EntryFacade ..> DatabaseFacade :use
+member "1" -- "*" user
+chanel "    1" o-- "    +" member
+ContentFacade ..> AccountFacade :use
+ContentFacade ..> member :use
+LeaveChanelFacade ..> ContentFacade :use
+AccountFacade ..> user :use
+AccountFacade ..> DatabaseFacade :use
+chanel "1" o-left- "+" member
+user "*" -- "*" chanel
+JoinChannelFacade ..> ContentFacade :use
+JoinChannelFacade ..> EntryFacade :use
+EntryFacade ..> chanel :use
+EntryFacade ..> DatabaseFacade :use
+EntryFacade ..> user :use
+chanel "1" -- "             +" member
+member "1" -- "         0..1" producer
+chanel "        *" -- "+" user
+member "                    *" -- "1" user
+ChannelsCatalog "1" -- "*" chanel
+MonetaryFacade ..> ChannelFacade :use
+ChannelFacade ..> AccountFacade :use
+ChannelFacade ..> chanel :use
+ChannelFacade ..> ChannelsCatalog :use
+AccountFacade ..> user :use
+content "           *" -- "             1" chanel
+CreateContentFacade ..> ContentFacade :use
+ContentFacade ..> chanel :use
+ContentFacade ..> DatabaseFacade :use
+chanel "            1" o-- "            +" member
+member "        1" -- "          0..1" manager
+chanel "1" -- "*" manager
+setManagerFacade ..> ChannelFacade :use
+ChannelFacade ..> chanel :use
+ChannelFacade ..> DatabaseFacade :use
+chanel "            1" o-- "            +" member
+member "        1" -- "          0..1" manager
+chanel "1" -- "*" manager
+setManagerFacade ..> ChannelFacade :use
+ChannelFacade ..> chanel :use
+ChannelFacade ..> DatabaseFacade :use
+chanel "                    1" o-up- "+" member
+subscription "              *" -down- "1" chanel
+member "1" *-right- "*" subscription
+member "*" -left- "1" user
+MonetaryFacade  ..>  AccountFacade :use
+SubscriptionFacade  ..>  ContentFacade :use
+SubscriptionFacade ..>  MonetaryFacade :use
+MonetaryFacade ..>  DatabaseFacade :use
+ContentFacade .>  chanel :use
+AccountFacade ..>  user :use
+MonetaryFacade .>  chanel :use
+MonetaryFacade .>  member :use
+
+@enduml
