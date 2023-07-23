@@ -3,19 +3,20 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
+skinparam classAttributeIconSize 0
 
 class "User" as user {
-    addMembership(newMembership)
+    +void addMembership(Member newMember)
 }
 
 class "Channel" as chanel {
-    getName()
+    +string getName()
     Channel()
 }
 
 class "Member" as member {
     Member()
-    promoteMember(owner)
+    +void promoteMember(Owner owner)
 }
 
 class "Owner" as owner {
@@ -23,25 +24,25 @@ class "Owner" as owner {
 }
 
 class CreateChannelFacade {
-    createChannel(channelInfo)
+    +void createChannel(string channelInfo)
 }
 
 class ChannelFacade {
-    createChannel(channelInfo)
+    +void createChannel(string channelInfo)
 }
 
 class AccountFacade {
-    addMembership(newMember)
+    +void addMembership(Member newMember)
 }
 
 class DatabaseFacade {
-    save(newChannel)
-    save(firstMember)
-    save(owner)
+    +void save(Channel newChannel)
+    +void save(Member firstMember)
+    +void save(Owner owner)
 }
 
 class ChannelsCatalog {
-    getAllChannels()
+    +List<Channels> getAllChannels()
 }
 
 user "          1" -- "*" chanel

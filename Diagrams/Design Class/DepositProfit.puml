@@ -4,43 +4,39 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
-
-abstract "تولیدکننده محتوا" as producer {
-    درصد سود
-    واریز سود(مقدار سود)
-}
+skinparam classAttributeIconSize 0
 
 class "Channel" as chanel {
-    totalProfit
-    deposit()
-    calculateProfit()
-    report()
+    -double totalProfit
+    +void deposit()
+    -double calculateProfit()
+    +void report()
 
 }
 
 class "User" as user {
-    deposit(share * totalProfit)
+    +void deposit(double share * totalProfit)
 }
 
 class "Member" as member {
-    getShare()
+    +double getShare()
 }
 
 class MonetaryFacade {
-    deposit()
+    +void deposit()
 }
 
 class ChannelFacade {
-    deposit()
-    deposit(currentMember, share * totalProfit)
+    +void deposit()
+    +void deposit(Member currentMember, double share * totalProfit)
 }
 
 class ChannelsCatalog {
-    getAllChannels()
+    +List<Channel> getAllChannels()
 }
 
 class AccountFacade {
-    deposit(currentMember, share * totalProfit)
+    +void deposit(Member currentMember, double share * totalProfit)
 }
 
 chanel "1" -- "             +" member

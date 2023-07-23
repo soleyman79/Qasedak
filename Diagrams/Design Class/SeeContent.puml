@@ -2,35 +2,37 @@
 
 scale 2
 skinparam DefaultFontName B Nazanin
+skinparam classAttributeIconSize 0
 
 
 class "Content" as content {
-    getInfo()
-    getAccessLevel()
-    getSummary()
+    -string info
+    +string getInfo()
+    +string getAccessLevel()
+    +strimg getSummary()
 }
 
 class "Chanel" as chanel {
-    getContents()
-    selectContent(contentInfo)
+    +List<Content> getContents()
+    +Content selectContent(string contentInfo)
 }
 
 class "Member" as member {
-    getAccessLevel()
+    +string getAccessLevel()
 }
 
 class UIContentFacade {
-    getContents(member)
-    selectContent(member, contentInfo)
+    +List<Content> getContents(Member member)
+    +Content selectContent(Member member, string contentInfo)
 }
 
 class ViewContentFacade {
-    getContents(member)
-    selectContent(member, contentInfo)
+    +List<Content> getContents(Member member)
+    +Content selectContent(Member member, string contentInfo)
 }
 
 class ContentsCatalog {
-    getChannelContents()
+    +List<Content> getChannelContents()
 }
 
 content "*" --o "1" chanel

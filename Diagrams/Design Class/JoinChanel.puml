@@ -3,14 +3,15 @@
 
 scale 3
 skinparam DefaultFontName B Nazanin
+skinparam classAttributeIconSize 0
 
 
 class "User" as user {
-    addMembership(newMember)
+    +void addMembership(Member newMember)
 }
 
 class "Chanel" as chanel {
-    addMember(user)
+    +Member addMember(User user)
 }
 
 class "Member" as member {
@@ -18,20 +19,20 @@ class "Member" as member {
 }
 
 class EntryFacade {
-    joinChannel(user, foundChannel)
+    +void joinChannel(User user, Channel foundChannel)
 }
 
 class JoinChannelFacade {
-    searchChannel(channelInfo)
-    joinChanel(channelInfo)
+    +Channel searchChannel(string channelInfo)
+    +void joinChanel(string channelInfo)
 }
 
 class ContentFacade {
-    searchChannel()
+    +Channel searchChannel()
 }
 
 class DatabaseFacade {
-    save(newMember)
+    +void save(Member newMember)
 }
 
 chanel "1" o-left- "+" member

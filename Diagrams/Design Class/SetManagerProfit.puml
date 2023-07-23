@@ -4,29 +4,27 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
-
-class "صاحب کانال" as owner {
-}
+skinparam classAttributeIconSize 0
 
 class "Channel" as chanel {
-    setManagerProfit(member, profit)
+    +void setManagerProfit(Member member, double profit)
 }
 
 class "Member" as member {
-    setProfit(profit)
+    +void setProfit(double profit)
 }
 
 class "Manager" as manager {
-    profit
-    setProfit()
+    -double profit
+    +void setProfit(double profit)
 }
 
 class SetManagerFacade {
-    setManagerProfit(owner, member, profit)
+    +void setManagerProfit(Owner owner, Member member, double profit)
 }
 
 class ChannelFacade {
-    setManagerProfit(owner, member, profit)
+    +void setManagerProfit(Owner owner, Member member, double profit)
 }
 
 owner "1" -- "1" chanel

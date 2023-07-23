@@ -3,34 +3,34 @@
 
 scale 3
 skinparam DefaultFontName B Nazanin
-
+skinparam classAttributeIconSize 0
 
 class "Chanel" as chanel {
-    removeMember(member))
+    +void removeMember(Member member)
 }
 
 class "member" as member {
-    leave()
+    +void leave()
 }
 
 class "User" as user {
-    removeMembership(member)
+    +void removeMembership(Member member)
 }
 
 class LeaveChanelFacade {
-    leaveChanel(member)
+    +void leaveChanel(Member member)
 }
 
 class ContentFacade {
-    leaveChanel(member)
+    +void leaveChanel(Member member)
 }
 
 class AccountFacade {
-    removeMembership(member)
+    +void removeMembership(Member member)
 }
 
 class DatabaseFacade {
-    delete(member)
+    +void delete(Member member)
 }
 
 member "1" -- "*" user

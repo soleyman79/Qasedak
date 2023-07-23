@@ -2,14 +2,14 @@
 
 scale 3
 skinparam DefaultFontName B Nazanin
-
+skinparam classAttributeIconSize 0
 
 class LogoutFacade {
-    requestLogout()
+    +void requestLogout()
 }
 
 class EntryFacade {
-    logout(user)
+    +void logout(User user)
 }
 
 LogoutFacade ..> EntryFacade :use

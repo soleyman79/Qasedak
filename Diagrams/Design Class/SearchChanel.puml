@@ -2,21 +2,22 @@
 
 scale 3
 skinparam DefaultFontName B Nazanin
+skinparam classAttributeIconSize 0
 
 class "Chanel" as chanel {
-    getInfo()
+    +string getInfo()
 }
 
 class SearchFacade {
-    searchChanel(chanelInfo)
+    +Channel searchChanel(string chanelInfo)
 }
 
 class ContentFacade {
-    searchChanel(chanelInfo)
+    +Channel searchChanel(string chanelInfo)
 }
 
 class ChannelsCatalog {
-    getAllChannels()
+    +List<Channel> getAllChannels()
 }
 
 ChannelsCatalog "1" -- "*" chanel

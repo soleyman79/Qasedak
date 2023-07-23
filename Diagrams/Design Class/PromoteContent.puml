@@ -4,34 +4,34 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
-
+skinparam classAttributeIconSize 0
 
 class "Chanel" as chanel {
-    getContents()
-    promoteContent(contentInfo)
+    +List<Content> getContents()
+    +void promoteContent(string contentInfo)
 }
 
 class Content {
-    info
-    getInfo()
-    promote()
+    -string info
+    +string getInfo()
+    +void promote()
 }
 
 class PromoteContentFacade {
-    getContents(producer)
-    promoteContents(producer, contentsInfo)
+    +List<Content> getContents(Producer producer)
+    +void promoteContents(Producer producer, string contentsInfo)
 }
 
 class ViewContentFacade {
-    getContents(producer)
+    +List<Contents> getContents(Producer producer)
 }
 
 class ProduceContentFacade {
-    promoteContents(producer, contentsInfo)
+    +void promoteContents(Producer producer, string contentsInfo)
 }
 
 class ContentsCatalog {
-    getChannelsContent()
+    +List<Contents> getChannelsContent()
 }
 
 
