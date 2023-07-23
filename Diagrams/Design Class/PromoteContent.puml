@@ -5,22 +5,41 @@ scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
-abstract "تولیدکننده محتوا" as producer {
+
+class "Chanel" as chanel {
+    getContents()
+    promoteContent(contentInfo)
 }
 
-class "محتوا" as content {
-    مشخصات محتوا
-    گرفتن مشخصات()
-    ارتقای سطح دسترسی()
+class Content {
+    info
+    getInfo()
+    promote()
 }
 
-class "کانال" as chanel {
-    مشاهده محتویات()
-    انتخاب محتوا(مشخصات محتوا)
+class PromoteContentFacade {
+    getContents(producer)
+    promoteContents(producer, contentsInfo)
 }
 
-content "           *" -- "1" chanel
+class ViewContentFacade {
+    getContents(producer)
+}
+
+class ProduceContentFacade {
+    promoteContents(producer, contentsInfo)
+}
+
+class ContentsCatalog {
+    getChannelsContent()
+}
+
+
+
+Content "           *" -- "1" chanel
 producer "+" -- "                   1" chanel
-
-
+PromoteContentFacade ..> ViewContentFacade :use
+PromoteContentFacade ..> ProduceContentFacade :use
+ViewContentFacade ..> chanel :use
+ProduceContentFacade ..> chanel :use
 @enduml
