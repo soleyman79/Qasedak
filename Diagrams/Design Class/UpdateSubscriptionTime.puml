@@ -4,20 +4,36 @@ scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
-class "کاربر" as user {
-    به‌روزرسانی اشتراک‌ها()
+class User {
+    updateSubscriptions()
 }
 
-class "عضو کانال" as member {
-    کاهش روزانه()
+class Member {
+    dailyDecrease()
 }
 
-class "اشتراک" as subscription {
-    زمان باقیمانده
-    کاهش زمان باقیمانده()
+class Subscription {
+    remainingTime()
+    decreaseTime()
+    }
+
+class MonetaryFacade {
+    updateSubscriptions()
 }
 
-user "1" -- "*" member
+class AccountFacade {
+    updateSubscriptions()
+}
+
+class DatabaseFacade {
+    delete(oldestSubscription)
+}
+
+
 member "1" *-- "*" subscription
+user "1" -- "*" member
+AccountFacade ..> User :use
+AccountFacade ..> DatabaseFacade :use
+MonetaryFacade ..> AccountFacade :use
 
 @enduml
