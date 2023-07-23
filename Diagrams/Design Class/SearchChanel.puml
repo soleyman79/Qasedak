@@ -3,15 +3,24 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 
-
-class "کاربر" as user {
+class "Chanel" as chanel {
+    getInfo()
 }
 
-class "کانال" as chanel {
-    گرفتن اطلاعات کانال()
-    پیدا کردن کانال(اطلاعات کانال)
+class SearchFacade {
+    searchChanel(chanelInfo)
 }
 
-user "*" -- "*" chanel
+class ContentFacade {
+    searchChanel(chanelInfo)
+}
 
+class ChannelsCatalog {
+    getAllChannels()
+}
+
+ChannelsCatalog "1" -- "*" chanel
+ContentFacade ..> ChannelsCatalog :use
+ContentFacade ..> chanel :use
+SearchFacade ..> ContentFacade :use
 @enduml
