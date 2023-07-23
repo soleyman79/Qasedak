@@ -4,20 +4,21 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
+skinparam classAttributeIconSize 0
 
 class "Channel" as chanel {
-    setPrice(owner)
-    setSubscriptionPrice(type, price)
+    +void setPrice(double owner)
+    +void setSubscriptionPrice(string type, double price)
 }
 
 class SetPriceFacade {
-    setPrice(owner)
-    setSubscriptionPrice(type, price)
+    +void setPrice(Owner owner)
+    +void setSubscriptionPrice(string type, double price)
 }
 
 class ChannelFacade {
-    setPrice(owner)
-    setSubscriptionPrice(type, price)
+    +void setPrice(Owner owner)
+    +void setSubscriptionPrice(string type, double price)
 }
 
 ChannelFacade ..> chanel :use
