@@ -43,10 +43,16 @@ class "SubscriptionFacade" {
     seeSubscription(member)
 }
 
-subscription "              *" -down- "1" chanel
 chanel "                    1" o-up- "+" member
+subscription "              *" -down- "1" chanel
 member "1" *-right- "*" subscription
 member "*" -left- "1" user
-DatabaseFacade "1" -left- "1" SubscriptionFacade
-
+MonetaryFacade  ..>  AccountFacade :use
+SubscriptionFacade  ..>  ContentFacade :use
+SubscriptionFacade ..>  MonetaryFacade :use
+MonetaryFacade ..>  DatabaseFacade :use
+ContentFacade .>  chanel :use
+AccountFacade ..>  user :use
+MonetaryFacade .>  chanel :use
+MonetaryFacade .>  member :use
 @enduml
