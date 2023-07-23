@@ -5,21 +5,32 @@ scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
-abstract "تولیدکننده محتوا" as producer {
+
+class "Content" as content {
+    Content()
 }
 
-class "محتوا" as content {
-    مشخصات محتوا
+class "Channel" as chanel {
+    createContent(contentInfo)
+    publish(newContent)
 }
 
-class "کانال" as chanel {
-    ایجاد محتوا(مشخصات محتوا)
-    انتشار محتوا(محتوا)
+class CreateContentFacade {
+    createContent(producer, contentInfo)
 }
 
-producer "          1" -- "             *" content
+class ContentFacade {
+    createContent(contentInfo)
+}
+
+class DatabaseFacade {
+    save(newContent)
+}
+
 content "           *" -- "             1" chanel
-producer "+" -- "1" chanel
+CreateContentFacade ..> ContentFacade :use
+ContentFacade ..> chanel :use
+ContentFacade ..> DatabaseFacade :use
 
 
 @enduml
