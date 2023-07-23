@@ -4,21 +4,20 @@ scale 3
 skinparam DefaultFontName B Nazanin
 
 
-class "کاربر" as user {
-    ورود به سامانه()
-    وارد کردن اطلاعات کاربری()
+class LoginFacade {
+    requestLogin()
+    login(username, password)
 }
 
-class "ایمیل" as address {
-    آدرس ایمیل
+class EntryFacade {
+    login(username, password)
 }
 
-class "تلفن" as phone {
-    کد کشور
-    شماره تلفن
+class DatabaseFacade {
+    getUser(username)
 }
 
-user "1" -left- "1" address
-user "1" -right- "1" phone
+LoginFacade ..> EntryFacade :use
+EntryFacade ..> DatabaseFacade :use
 
 @enduml
