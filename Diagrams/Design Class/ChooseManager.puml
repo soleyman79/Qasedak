@@ -6,24 +6,36 @@ skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
 
-class "صاحب کانال" as owner {
-    انتخاب مدیر(عضو کانال)
+class "Chanel" as chanel {
+    setManager(choosenMember)
 }
 
-class "کانال" as chanel {
+class "Member" as member {
+    promote(newManager)
 }
 
-class "عضو کانال" as member {
-    ارتقا به تولیدکننده(تولیدکننده)
+class "Manager" as manager {
+    Manager()
 }
 
-class "مدیر کانال" as manager {
+class setManagerFacade {
+    setManager(owner, choosenMember)
 }
 
-owner "         1" -- "         1" chanel
+class ChannelFacade {
+    setManager(owner, choosenMember)
+}
+
+
+class "DatabaseFacade" {
+    save(newManager)
+}
+
 chanel "            1" o-- "            +" member
 member "        1" -- "          0..1" manager
 chanel "1" -- "*" manager
-
+setManagerFacade ..> ChannelFacade :use
+ChannelFacade ..> chanel :use
+ChannelFacade ..> DatabaseFacade :use
 
 @enduml
