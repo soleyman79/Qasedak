@@ -2,19 +2,19 @@
 
 scale 3
 skinparam DefaultFontName B Nazanin
-
+skinparam classAttributeIconSize 0
 
 class LoginFacade {
-    requestLogin()
-    login(username, password)
+    +void requestLogin()
+    +void login(string username, string password)
 }
 
 class EntryFacade {
-    login(username, password)
+    +void login(string username, string password)
 }
 
 class DatabaseFacade {
-    getUser(username)
+    +User getUser(string username)
 }
 
 LoginFacade ..> EntryFacade :use
