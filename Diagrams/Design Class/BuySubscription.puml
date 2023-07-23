@@ -4,23 +4,43 @@ scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
-class "اشتراک" as subscription {
-    قیمت
+class "Subscription" as subscription {
+    Subscription()
 }
 
-class "کانال" as chanel {
-    سود ماه جاری
-    مشاهده اشتراک‌ها()
-    خرید اشتراک()
+class "Chanel" as chanel {
+    getSubscription()
+    getFee(subscriptionType)
 }
 
-class "عضو کانال" as member {
-    افزودن اشتراک(اشتراک)
+class "Member" as member {
+    addSubscription(newSubscription)
 }
 
-class "کاربر" as user {
-    گرفتن اعتبار()
-    کاهش اعتبار(مقدار)
+class "User" as user {
+    getCredit()
+    decreaseCredit(subscriptionFee)
+}
+
+class "ContentFacade" {
+    seeSubscription(member)
+}
+
+class "AccountFacade" {
+    getCredit(member)
+    decreaseCredit(member, subscriptionFee)
+}
+
+class "MonetaryFacade" {
+    buySubscription(member, subscriptionType)
+}
+
+class "DatabaseFacade" {
+    save(newSubscription)
+}
+
+class "SubscriptionFacade" {
+    seeSubscription((member)
 }
 
 subscription "              *" -down- "1" chanel
