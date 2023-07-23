@@ -40,12 +40,13 @@ class "DatabaseFacade" {
 }
 
 class "SubscriptionFacade" {
-    seeSubscription((member)
+    seeSubscription(member)
 }
 
 subscription "              *" -down- "1" chanel
 chanel "                    1" o-up- "+" member
 member "1" *-right- "*" subscription
 member "*" -left- "1" user
+DatabaseFacade "1" -left- "1" SubscriptionFacade
 
 @enduml
