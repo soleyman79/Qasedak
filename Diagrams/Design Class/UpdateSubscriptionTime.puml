@@ -3,30 +3,31 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
+skinparam classAttributeIconSize 0
 
 class User {
-    updateSubscriptions()
+    +void updateSubscriptions()
 }
 
 class Member {
-    dailyDecrease()
+    +void dailyDecrease()
 }
 
 class Subscription {
-    remainingTime()
-    decreaseTime()
+    -int remainingTime
+    +void decreaseTime()
     }
 
 class MonetaryFacade {
-    updateSubscriptions()
+    +void updateSubscriptions()
 }
 
 class AccountFacade {
-    updateSubscriptions()
+    +void updateSubscriptions()
 }
 
 class DatabaseFacade {
-    delete(oldestSubscription)
+    +void delete(Subscription oldestSubscription)
 }
 
 
