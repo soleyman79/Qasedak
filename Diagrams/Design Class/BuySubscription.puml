@@ -3,44 +3,46 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
+skinparam classAttributeIconSize 0
 
 class "Subscription" as subscription {
     Subscription()
 }
 
 class "Chanel" as chanel {
-    getSubscription()
-    getFee(subscriptionType)
+    +List<Subscription> getSubscription()
+    +double getFee(string subscriptionType)
 }
 
 class "Member" as member {
-    addSubscription(newSubscription)
+    +void addSubscription(Subscription newSubscription)
 }
 
 class "User" as user {
-    getCredit()
-    decreaseCredit(subscriptionFee)
+    +Double getCredit()
+    +void decreaseCredit(double subscriptionFee)
 }
 
 class "ContentFacade" {
-    seeSubscription(member)
+    +List<Subscription> seeSubscription(Member member)
 }
 
 class "AccountFacade" {
-    getCredit(member)
-    decreaseCredit(member, subscriptionFee)
+    +double getCredit(Member member)
+    +void decreaseCredit(Member member, double subscriptionFee)
 }
 
 class "MonetaryFacade" {
-    buySubscription(member, subscriptionType)
+    +void buySubscription(Member member, string subscriptionType)
 }
 
 class "DatabaseFacade" {
-    save(newSubscription)
+    +void save(Subscription newSubscription)
 }
 
 class "SubscriptionFacade" {
-    seeSubscription(member)
+    +void seeSubscription(Member member)
+    +void buySubscription(Member member, string subscriptionType)
 }
 
 chanel "                    1" o-up- "+" member
