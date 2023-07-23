@@ -2,43 +2,38 @@
 
 scale 3
 skinparam DefaultFontName B Nazanin
-
-
-class "کاربر بالقوه" as potential_user {
-    ثبت‌نام()
-    وارد کردن شناسه()
-}
+skinparam classAttributeIconSize 0
 
 class Email {
     Email()
-    emailAddress
+    -string emailAddress
 }
 
 class Phone {
-    phoneNumber
+    -string phoneNumber
     Phone()
 }
 
 class User{
-    username
-    password
+    -string username
+    -string password
     User()
 }
 
 class SignupFacade {
-    requestSignup()
-    signup(username, password)
+    +void requestSignup()
+    +void signup(string username, string password)
 }
 
 class EntryFacade {
-    signup(username, password)
+    +void signup(string username, string password)
 }
 
 class DatabaseFacade {
-    exists(username)
-    save(email)
-    save(phone)
-    save(user)
+    +boolean exists(string username)
+    +void save(string email)
+    +void save(string phone)
+    +void save(User user)
 }
 
 potential_user "1" -left- "1" Email
