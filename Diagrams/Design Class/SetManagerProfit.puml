@@ -8,22 +8,31 @@ skinparam ArrowMessageAlignment right
 class "صاحب کانال" as owner {
 }
 
-class "کانال" as chanel {
-    تعیین سود مدیر(عضو کانال، مقدار سود)
+class "Channel" as chanel {
+    setManagerProfit(member, profit)
 }
 
-class "عضو کانال" as member {
-    تعیین سود(مقدار سود)
+class "Member" as member {
+    setProfit(profit)
 }
 
-class "مدیر" as manager {
-    مقدار سود
-    تعیین سود(مقدار سود)
+class "Manager" as manager {
+    profit
+    setProfit()
+}
+
+class SetManagerFacade {
+    setManagerProfit(owner, member, profit)
+}
+
+class ChannelFacade {
+    setManagerProfit(owner, member, profit)
 }
 
 owner "1" -- "1" chanel
 chanel "1" o-- "+" member
 member "1" -- "0..1" manager
-
+SetManagerFacade ..> ChannelFacade :use
+ChannelFacade ..> chanel :use
 
 @enduml
