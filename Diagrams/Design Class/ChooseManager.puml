@@ -4,14 +4,15 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
+skinparam classAttributeIconSize 0
 
 
 class "Chanel" as chanel {
-    setManager(choosenMember)
+    +void setManager(Member choosenMember)
 }
 
 class "Member" as member {
-    promote(newManager)
+    +void promote(Manager newManager)
 }
 
 class "Manager" as manager {
@@ -19,16 +20,16 @@ class "Manager" as manager {
 }
 
 class setManagerFacade {
-    setManager(owner, choosenMember)
+    +void setManager(Owner owner, Member choosenMember)
 }
 
 class ChannelFacade {
-    setManager(owner, choosenMember)
+    +void setManager(Owner owner, Member choosenMember)
 }
 
 
 class "DatabaseFacade" {
-    save(newManager)
+    +void save(Manager newManager)
 }
 
 chanel "            1" o-- "            +" member
