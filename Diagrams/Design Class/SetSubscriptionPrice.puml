@@ -1,8 +1,8 @@
 @startuml set_subscription_price
 
 
-scale 3
-skinparam DefaultFontName B Nazanin
+scale 4
+skinparam DefaultFontName Vazir
 skinparam ArrowMessageAlignment right
 skinparam classAttributeIconSize 0
 

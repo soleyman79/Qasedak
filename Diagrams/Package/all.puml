@@ -1,15 +1,13 @@
 @startuml package
 
 
-scale 3
+scale 4
 skinparam DefaultFontName Vazir
 skinparam DefaultTextAlignment center
 
 
 package "زیرسیستم کاربری" as user_sub {
   class "کاربر" as user
-  class "ایمیل" as email
-  class "شماره تلفن" as phone
 }
 
 package "زیرسیستم تولید محتوا" as producer_sub {
@@ -32,9 +30,6 @@ package "زیرسیستم مشاهده محتوا" as viewer_sub {
     class "فایل صوتی" as audio
   }
 }
-
-user -l- email
-user -r- phone
 
 owner -u-^ producer
 manager -d-^ producer

@@ -1,8 +1,8 @@
 @startuml promote_content
 
 
-scale 3
-skinparam DefaultFontName B Nazanin
+scale 4
+skinparam DefaultFontName Vazir
 skinparam ArrowMessageAlignment right
 skinparam classAttributeIconSize 0
 
@@ -42,4 +42,6 @@ PromoteContentFacade ..> ViewContentFacade :use
 PromoteContentFacade ..> ProduceContentFacade :use
 ViewContentFacade ..> chanel :use
 ProduceContentFacade ..> chanel :use
+
+
 @enduml

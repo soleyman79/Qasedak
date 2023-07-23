@@ -1,6 +1,7 @@
-@startuml Aggregated
+@startuml all
 
-scale 3
+
+scale 4
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
@@ -22,7 +23,6 @@ class "کاربر" as user {
     گرفتن اعتبار()
     کاهش اعتبار(مقدار)
 }
-
 
 class "صاحب کانال" as owner {
     انتخاب مدیر(عضو کانال)
@@ -90,7 +90,6 @@ class "عضو کانال" as member {
     واریز سود(مقدار سود)
 }
 
-
 class "کاربر" as user {
     افزودن عضویت(عضو کانال)
 }
@@ -101,8 +100,6 @@ class "کانال" as chanel {
 
 class "عضو کانال" as member {
 }
-
-
 
 class "کانال" as chanel {
     (عضو کانال)حذف عضو
@@ -213,17 +210,7 @@ class "اشتراک" as subscription {
 }
 
 
-
-
-
-
-
-
-
-
-
 member "1" -- "         0..1" producer
-
 
 producer "+" -- "1" chanel
 
@@ -244,9 +231,9 @@ owner "1" -- "1" chanel
 user "1" -right- "1" phone
 user "1" -left- "1" address
 
-
 member "1" *-- "*" subscription
 subscription "*" - "1" chanel
 subscription "*" --* "1" member
+
 
 @enduml

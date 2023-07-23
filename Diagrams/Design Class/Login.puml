@@ -1,7 +1,8 @@
 @startuml login
 
-scale 3
-skinparam DefaultFontName B Nazanin
+
+scale 4
+skinparam DefaultFontName Vazir
 skinparam classAttributeIconSize 0
 
 class LoginFacade {
@@ -19,5 +20,6 @@ class DatabaseFacade {
 
 LoginFacade ..> EntryFacade :use
 EntryFacade ..> DatabaseFacade :use
+
 
 @enduml

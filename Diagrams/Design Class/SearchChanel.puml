@@ -1,7 +1,7 @@
-@startuml search_chanel
+@startuml searchChanel
 
-scale 3
-skinparam DefaultFontName B Nazanin
+scale 4
+skinparam DefaultFontName Vazir
 skinparam classAttributeIconSize 0
 
 class "Chanel" as chanel {
@@ -24,4 +24,6 @@ ChannelsCatalog "1" -- "*" chanel
 ContentFacade ..> ChannelsCatalog :use
 ContentFacade ..> chanel :use
 SearchFacade ..> ContentFacade :use
+
+
 @enduml

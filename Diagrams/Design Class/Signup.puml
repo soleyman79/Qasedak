@@ -1,8 +1,10 @@
 @startuml signup
 
-scale 3
-skinparam DefaultFontName B Nazanin
+
+scale 4
+skinparam DefaultFontName Vazir
 skinparam classAttributeIconSize 0
+
 
 class Email {
     Email()
@@ -44,5 +46,6 @@ EntryFacade ..> Email :use
 EntryFacade ..> Phone :use
 EntryFacade ..> User :use
 SignupFacade ..> EntryFacade :use
+
 
 @enduml

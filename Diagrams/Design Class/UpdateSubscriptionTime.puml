@@ -1,7 +1,8 @@
 @startuml update_subscription_time
 
-scale 3
-skinparam DefaultFontName B Nazanin
+
+scale 4
+skinparam DefaultFontName Vazir
 skinparam ArrowMessageAlignment right
 skinparam classAttributeIconSize 0
 
@@ -36,5 +37,6 @@ user "1" -- "*" member
 AccountFacade ..> User :use
 AccountFacade ..> DatabaseFacade :use
 MonetaryFacade ..> AccountFacade :use
+
 
 @enduml

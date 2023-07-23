@@ -1,8 +1,8 @@
 @startuml leave_chanel
 
 
-scale 3
-skinparam DefaultFontName B Nazanin
+scale 4
+skinparam DefaultFontName Vazir
 skinparam classAttributeIconSize 0
 
 class "Chanel" as chanel {

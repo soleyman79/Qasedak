@@ -1,8 +1,8 @@
 @startuml choose_manager
 
 
-scale 3
-skinparam DefaultFontName B Nazanin
+scale 4
+skinparam DefaultFontName Vazir
 skinparam ArrowMessageAlignment right
 skinparam classAttributeIconSize 0
 
@@ -38,5 +38,6 @@ chanel "1" -- "*" manager
 setManagerFacade ..> ChannelFacade :use
 ChannelFacade ..> chanel :use
 ChannelFacade ..> DatabaseFacade :use
+
 
 @enduml

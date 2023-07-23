@@ -1,8 +1,10 @@
 @startuml logout
 
-scale 3
-skinparam DefaultFontName B Nazanin
+
+scale 4
+skinparam DefaultFontName Vazir
 skinparam classAttributeIconSize 0
+
 
 class LogoutFacade {
     +void requestLogout()
@@ -13,5 +15,6 @@ class EntryFacade {
 }
 
 LogoutFacade ..> EntryFacade :use
+
 
 @enduml

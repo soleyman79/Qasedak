@@ -1,8 +1,8 @@
 @startuml join_chanel
 
 
-scale 3
-skinparam DefaultFontName B Nazanin
+scale 4
+skinparam DefaultFontName Vazir
 skinparam classAttributeIconSize 0
 
 
@@ -42,7 +42,6 @@ JoinChannelFacade ..> EntryFacade :use
 EntryFacade ..> chanel :use
 EntryFacade ..> DatabaseFacade :use
 EntryFacade ..> user :use
-
 
 
 @enduml

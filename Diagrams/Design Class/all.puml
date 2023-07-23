@@ -1,10 +1,10 @@
-@startuml buy_Subscription
+@startuml all
 
-scale 3
-skinparam DefaultFontName B Nazanin
+
+scale 4
+skinparam DefaultFontName Vazir
 skinparam ArrowMessageAlignment right
 skinparam classAttributeIconSize 0
-
 
 
 class Subscription {
@@ -21,7 +21,7 @@ class Member{
 }
 
 class User{
-    +Double getCredit()
+    +double getCredit()
     +void decreaseCredit(double subscriptionFee)
 }
 
@@ -464,5 +464,6 @@ Member "1" -- "*" User
 Member "1" -- "         0..1" producer
 Member "        1" -- "          0..1" Manager
 Member "1" *- "*" Subscription
+
 
 @enduml

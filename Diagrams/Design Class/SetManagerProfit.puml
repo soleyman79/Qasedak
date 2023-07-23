@@ -1,10 +1,11 @@
 @startuml set_manager_profit
 
 
-scale 3
-skinparam DefaultFontName B Nazanin
+scale 4
+skinparam DefaultFontName Vazir
 skinparam ArrowMessageAlignment right
 skinparam classAttributeIconSize 0
+
 
 class "Channel" as chanel {
     +void setManagerProfit(Member member, double profit)
@@ -32,5 +33,6 @@ chanel "1" o-- "+" member
 member "1" -- "0..1" manager
 SetManagerFacade ..> ChannelFacade :use
 ChannelFacade ..> chanel :use
+
 
 @enduml

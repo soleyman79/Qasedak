@@ -1,7 +1,8 @@
 @startuml buy_subscription
 
-scale 3
-skinparam DefaultFontName B Nazanin
+
+scale 4
+skinparam DefaultFontName Vazir
 skinparam ArrowMessageAlignment right
 skinparam classAttributeIconSize 0
 
@@ -57,4 +58,6 @@ ContentFacade .>  chanel :use
 AccountFacade ..>  user :use
 MonetaryFacade .>  chanel :use
 MonetaryFacade .>  member :use
+
+
 @enduml
