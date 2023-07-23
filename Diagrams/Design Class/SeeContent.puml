@@ -4,26 +4,41 @@ scale 2
 skinparam DefaultFontName B Nazanin
 
 
-class "محتوا" as content {
-    گرفتن مشخصات()
-    گرفتن سطح دسترسی()
-    گرفتن خلاصه()
+class "Content" as content {
+    getInfo()
+    getAccessLevel()
+    getSummary()
 }
 
-class "کانال" as chanel {
-    مشاهده محتویات()
-    انتخاب محتوا(مشخصات محتوا)
+class "Chanel" as chanel {
+    getContents()
+    selectContent(contentInfo)
 }
 
-class "عضو کانال" as member {
-    گرفتن سطح دسترسی()
+class "Member" as member {
+    getAccessLevel()
 }
 
-class "اشتراک" as subscription{
+class UIContentFacade {
+    getContents(member)
+    selectContent(member, contentInfo)
+}
+
+class ViewContentFacade {
+    getContents(member)
+    selectContent(member, contentInfo)
+}
+
+class ContentsCatalog {
+    getChannelContents()
 }
 
 content "*" --o "1" chanel
 chanel "1" o-left- "+" member
 subscription "*" --* "1" member
+chanel "1" -- "1" ContentsCatalog
+UIContentFacade ..> ViewContentFacade :use
+ViewContentFacade ..> chanel :use
+
 
 @enduml
