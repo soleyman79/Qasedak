@@ -9,21 +9,45 @@ class "کاربر بالقوه" as potential_user {
     وارد کردن شناسه()
 }
 
-class "ایمیل" as address {
-    آدرس ایمیل
+class Email {
+    Email()
+    emailAddress
 }
 
-class "تلفن" as phone {
-    کد کشور
-    شماره تلفن
+class Phone {
+    phoneNumber
+    Phone()
 }
 
-class "کاربر" as user {
-    رمز عبور
+class User{
+    username
+    password
+    User()
 }
 
-potential_user "1" -left- "1" address
-potential_user "1" -right- "1" phone
-potential_user "1" -down- "1" user
+class SignupFacade {
+    requestSignup()
+    signup(username, password)
+}
+
+class EntryFacade {
+    signup(username, password)
+}
+
+class DatabaseFacade {
+    exists(username)
+    save(email)
+    save(phone)
+    save(user)
+}
+
+potential_user "1" -left- "1" Email
+potential_user "1" -right- "1" Phone
+potential_user "1" -down- "1" User
+EntryFacade ..> DatabaseFacade :use
+EntryFacade ..> Email :use
+EntryFacade ..> Phone :use
+EntryFacade ..> User :use
+SignupFacade ..> EntryFacade :use
 
 @enduml
