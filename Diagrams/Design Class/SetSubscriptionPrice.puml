@@ -5,16 +5,23 @@ scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
 
-class "صاحب کانال" as owner {
+class "Channel" as chanel {
+    setPrice(owner)
+    setSubscriptionPrice(type, price)
 }
 
-class "کانال" as chanel {
-    انواع اشتراک‌ها 
-    تعریف حق عضویت()
-    قیمت‌گذاری(نوع اشتراک)
+class SetPriceFacade {
+    setPrice(owner)
+    setSubscriptionPrice(type, price)
 }
 
-owner -- chanel
+class ChannelFacade {
+    setPrice(owner)
+    setSubscriptionPrice(type, price)
+}
+
+ChannelFacade ..> chanel :use
+SetPriceFacade ..> ChannelFacade :use
 
 
 @enduml
