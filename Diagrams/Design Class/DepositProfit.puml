@@ -10,26 +10,48 @@ abstract "تولیدکننده محتوا" as producer {
     واریز سود(مقدار سود)
 }
 
-class "کانال" as chanel {
-    سود ماه جاری
-    محاسبه سود()
-    واریز سود()
-    ثبت گزارش واریز()
+class "Channel" as chanel {
+    totalProfit
+    deposit()
+    calculateProfit()
+    report()
+
 }
 
-class "کاربر" as user {
-    اعتبار
-    واریز سود(مقدار سود)
+class "User" as user {
+    deposit(share * totalProfit)
 }
 
-class "عضو کانال" as member {
-    گرفتن درصد سود()
-    واریز سود(مقدار سود)
+class "Member" as member {
+    getShare()
+}
+
+class MonetaryFacade {
+    deposit()
+}
+
+class ChannelFacade {
+    deposit()
+    deposit(currentMember, share * totalProfit)
+}
+
+class ChannelsCatalog {
+    getAllChannels()
+}
+
+class AccountFacade {
+    deposit(currentMember, share * totalProfit)
 }
 
 chanel "1" -- "             +" member
 member "1" -- "         0..1" producer
 chanel "        *" -- "+" user
 member "                    *" -- "1" user
+ChannelsCatalog "1" -- "*" chanel
+MonetaryFacade ..> ChannelFacade :use
+ChannelFacade ..> AccountFacade :use
+ChannelFacade ..> chanel :use
+ChannelFacade ..> ChannelsCatalog :use
+AccountFacade ..> user :use
 
 @enduml
