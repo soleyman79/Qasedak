@@ -4,6 +4,7 @@
 scale 3
 skinparam DefaultFontName B Nazanin
 skinparam ArrowMessageAlignment right
+skinparam classAttributeIconSize 0
 
 
 class "Content" as content {
@@ -11,20 +12,20 @@ class "Content" as content {
 }
 
 class "Channel" as chanel {
-    createContent(contentInfo)
-    publish(newContent)
+    +void createContent(string contentInfo)
+    -void publish(Content newContent)
 }
 
 class CreateContentFacade {
-    createContent(producer, contentInfo)
+    +void createContent(Producer producer, string contentInfo)
 }
 
 class ContentFacade {
-    createContent(contentInfo)
+    +void createContent(string contentInfo)
 }
 
 class DatabaseFacade {
-    save(newContent)
+    +void save(Content newContent)
 }
 
 content "           *" -- "             1" chanel
