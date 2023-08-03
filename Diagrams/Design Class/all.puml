@@ -12,15 +12,32 @@ class Subscription {
 }
 
 class Channel{
+    -channelInfo
+    -Map<String, double> subscriptionTypeFee
     +List<Subscription> getSubscription()
     +double getFee(string subscriptionType)
 }
 
 class Member{
+    Member()
+    +void setProfit(double profit)
+    +string getAccessLevel()
+    +void leave()
+    +double getShare()
+    +void promote(Manager newManager)
+    +void dailyDecrease()
     +void addSubscription(Subscription newSubscription)
 }
 
 class User{
+    -string username
+    -string password
+    -double credit
+    User()
+    +void updateSubscriptions()
+    +void addMembership(Member newMember)
+    +void removeMembership(Member member)
+    +void deposit(double share * totalProfit)
     +double getCredit()
     +void decreaseCredit(double subscriptionFee)
 }
@@ -51,40 +68,11 @@ class Channel{
     +void setManager(Member choosenMember)
 }
 
-class Member{
-    +void promote(Manager newManager)
-}
-
 class Manager{
     Manager()
 }
 
-class setManagerFacade {
-    +void setManager(Owner owner, Member choosenMember)
-}
-
-class ChannelFacade {
-    +void setManager(Owner owner, Member choosenMember)
-}
-
-
-class DatabaseFacade {
-    +void save(Manager newManager)
-}
-
-class Channel{
-    +void setManager(Member choosenMember)
-}
-
-class Member{
-    +void promote(Manager newManager)
-}
-
-class Manager{
-    Manager()
-}
-
-class setManagerFacade {
+class SetManagerFacade {
     +void setManager(Owner owner, Member choosenMember)
 }
 
@@ -123,15 +111,6 @@ class Channel {
     +void deposit()
     -double calculateProfit()
     +void report()
-
-}
-
-class User{
-    +void deposit(double share * totalProfit)
-}
-
-class Member{
-    +double getShare()
 }
 
 class MonetaryFacade {
@@ -144,6 +123,7 @@ class ChannelFacade {
 }
 
 class ChannelsCatalog {
+    -List<Channel> allChannels
     +List<Channel> getAllChannels()
 }
 
@@ -151,16 +131,8 @@ class AccountFacade {
     +void deposit(Member currentMember, double share * totalProfit)
 }
 
-class User{
-    +void addMembership(Member newMember)
-}
-
 class Channel{
     +Member addMember(User user)
-}
-
-class Member{
-    Member()
 }
 
 class EntryFacade {
@@ -182,14 +154,6 @@ class DatabaseFacade {
 
 class Channel{
     +void removeMember(Member member)
-}
-
-class Member{
-    +void leave()
-}
-
-class User{
-    +void removeMembership(Member member)
 }
 
 class LeaveChannelFacade {
@@ -230,13 +194,14 @@ class EntryFacade {
 }
 
 class Channel{
-    +List<Content> getContents()
     +void promoteContent(string contentInfo)
 }
 
 class Content {
     -string info
     +string getInfo()
+    +string getAccessLevel()
+    +strimg getSummary()
     +void promote()
 }
 
@@ -246,15 +211,11 @@ class PromoteContentFacade {
 }
 
 class ViewContentFacade {
-    +List<Contents> getContents(Producer producer)
+    +List<Content> getContents(Producer producer)
 }
 
 class ProduceContentFacade {
     +void promoteContents(Producer producer, string contentsInfo)
-}
-
-class ContentsCatalog {
-    +List<Contents> getChannelsContent()
 }
 
 class Channel {
@@ -269,24 +230,9 @@ class ContentFacade {
     +Channel searchChannel(string channelInfo)
 }
 
-class ChannelsCatalog {
-    +List<Channel> getAllChannels()
-}
-
-class Content {
-    -string info
-    +string getInfo()
-    +string getAccessLevel()
-    +strimg getSummary()
-}
-
 class Channel {
     +List<Content> getContents()
     +Content selectContent(string contentInfo)
-}
-
-class Member {
-    +string getAccessLevel()
 }
 
 class UIContentFacade {
@@ -300,15 +246,12 @@ class ViewContentFacade {
 }
 
 class ContentsCatalog {
+    -List<Content> channelContents
     +List<Content> getChannelContents()
 }
 
 class Channel {
     +void setManagerProfit(Member member, double profit)
-}
-
-class Member {
-    +void setProfit(double profit)
 }
 
 class Manager {
@@ -325,7 +268,7 @@ class ChannelFacade {
 }
 
 class Channel {
-    +void setPrice(double owner)
+    +void setPrice(double price)
     +void setSubscriptionPrice(string type, double price)
 }
 
@@ -349,12 +292,6 @@ class Phone {
     Phone()
 }
 
-class User{
-    -string username
-    -string password
-    User()
-}
-
 class SignupFacade {
     +void requestSignup()
     +void signup(string username, string password)
@@ -369,14 +306,6 @@ class DatabaseFacade {
     +void save(string email)
     +void save(string phone)
     +void save(User user)
-}
-
-class User {
-    +void updateSubscriptions()
-}
-
-class Member {
-    +void dailyDecrease()
 }
 
 class Subscription {
@@ -427,7 +356,7 @@ LeaveChannelFacade ..> ContentFacade :use
 ChannelFacade ..> AccountFacade :use
 ChannelFacade ..> ChannelsCatalog :use
 ChannelFacade ..> DatabaseFacade :use
-setManagerFacade ..> ChannelFacade :use
+SetManagerFacade ..> ChannelFacade :use
 SetPriceFacade ..> ChannelFacade :use
 
 SubscriptionFacade ..>  MonetaryFacade :use
@@ -461,7 +390,8 @@ Producer "+" -- "1" Channel
 ContentFacade ..> Member :use
 MonetaryFacade .>  Member :use
 Member "1" -- "*" User
-Member "1" -- "         0..1" producer
+Member "1" -- "         0..1" Producer
+Member "1" -- "         0..1" Owner
 Member "        1" -- "          0..1" Manager
 Member "1" *- "*" Subscription
 
