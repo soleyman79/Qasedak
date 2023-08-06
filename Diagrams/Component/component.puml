@@ -13,6 +13,10 @@ component "مولفه سیستم" as modelComp {
     component "زیرسیستم مالی" <<subsystem>> as financialComp
 
     interface " " as viewFinanInt
+    interface " " as viewProdInt
+    interface " " as viewUserInt
+    interface " " as userProdInt
+    interface " " as userfinanInt
 
     portin " " as p1
     portout " " as p2
@@ -45,8 +49,16 @@ end note
 
 userComp - financialComp
 
-financialComp ..> viewFinanInt : use
+financialComp ...> viewFinanInt : use
 viewFinanInt - viewComp
+produceComp ..> viewProdInt : use
+viewProdInt - viewComp
+viewComp ..> viewUserInt : use
+viewUserInt - userComp
+produceComp .> userProdInt : use
+userProdInt - userComp
+financialComp ..> userfinanInt : use
+userfinanInt - userComp
 
 produceComp -- p1
 userComp -- p1
@@ -60,8 +72,8 @@ userComp ..> p2
 produceComp ..> p2
 viewComp ..> p2
 
-userComp -- produceComp
-userComp -- viewComp
-produceComp - viewComp
+' userComp -- produceComp
+' userComp -- viewComp
+' produceComp - viewComp
 
 @enduml
