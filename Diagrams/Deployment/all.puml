@@ -1,0 +1,74 @@
+@startuml deployment
+
+scale 4
+skinparam DefaultFontName Vazir
+skinparam ArrowMessageAlignment right
+skinparam classAttributeIconSize 0
+
+node WebServer [
+    WebServer
+    ---
+]
+
+node BrowserClient{
+    artifact frontend
+} 
+
+label deployedartifact
+label boughtServer
+label client
+
+node ApplicationServer {
+    artifact djangoBackend {
+
+        component creation {
+            artifact creation.models
+            artifact creation.views
+            artifact creation.urls
+            artifact creation.admin
+            artifact creation.apps
+        }
+        component users {
+            artifact users.models
+            artifact users.views
+            artifact users.urls
+            artifact users.forms
+            artifact users.apps
+            artifact users.admin
+        }
+
+        component consumption {
+            artifact consumption.models
+            artifact consumption.views
+            artifact consumption.urls
+            artifact consumption.admin
+            artifact consumption.apps
+        }
+    }
+    node postgresql
+}
+
+BrowserClient --> WebServer : http
+djangoBackend --> postgresql : SQL
+WebServer --> ApplicationServer
+deployedartifact ..> djangoBackend
+boughtServer ..> WebServer
+client ..> BrowserClient
+creation --> users
+creation --> consumption
+
+users.views --> users.forms
+users.views --> users.models
+users.urls --> users.views
+users.forms --> users.models
+users.admin --> users.models
+
+creation.urls --> creation.views
+creation.views --> creation.models
+
+consumption.views --> consumption.models
+consumption.urls --> consumption.views
+consumption.admin --> consumption.models
+
+
+@enduml
